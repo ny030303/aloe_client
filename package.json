@@ -1,0 +1,34 @@
+{
+  "name": "engBook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "public/electron.js",
+  "homepage": "./",
+  "scripts": {
+    "electron": "public/electron.js",
+    "start1": "cd src && cross-env BROWSER=none npm start",
+    "start2": "wait-on http://localhost:3000 && electron .",
+    "start": "concurrently \"npm run start1\" \"npm run start2\"",
+    "build:osx": "electron-builder --mac",
+    "build:linux": "npm run build:linux32 && npm run build:linux64",
+    "build:linux32": "electron-builder --linux --ia32",
+    "build:linux64": "electron-builder --linux --x64",
+    "build:win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --out=out",
+    "build:win32": "electron-builder --win portable --ia32",
+    "build:win64": "electron-builder --win portable --x64"
+  },
+  "keywords": [],
+  "author": "jny",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "^11.3.0",
+    "electron-builder": "^22.9.1",
+    "electron-packager": "^15.2.0",
+    "wait-on": "^5.2.1"
+  },
+  "dependencies": {
+    "electron-is-dev": "^1.2.0"
+  }
+}
