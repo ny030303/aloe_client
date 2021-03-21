@@ -5,14 +5,6 @@ import MainPage from "./Routes/MainPage/MainPage";
 import eventService from "./services/EventService";
 // import posed, { PoseGroup } from 'react-pose';
 
-const openDialog = () => {
-  window.api.request("넘긴값", {
-    value:1234, 
-    key:'key', 
-    calback :(result)=>{
-    console.log('요청 후 결과 값 : ',result);
-}});
-};
 
 const PrivateRoute = ({component: Component, authed, ...rest}) => (
   <Route
@@ -51,6 +43,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        
         <HashRouter>
           {/* {this.state.isPanorama ? null :  (<MyNewsBox/>)} */}
 

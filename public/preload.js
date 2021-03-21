@@ -1,8 +1,40 @@
-const { contextBridge } = require("electron");
-
-contextBridge.exposeInMainWorld("api", {  //이름은 api입니닷
-    request : (channel, data) => {
-        console.log(channel, data);//html에서 넘기는 값, channel로 구분하면 됩니다.
-        data.calback({result:'성공'});
+// const {
+//     contextBridge,
+//     ipcRenderer, remote
+// } = require("electron");
+const {contextBridge, ipcRenderer, remote} = require("electron");
+// Expose protected methods that allow the renderer process to use
+// the ipcRenderer without exposing the entire object
+contextBridge.exposeInMainWorld(
+    "api", {
+        send: (channel, data) => {
+            // const {remote} = require("electron");
+            // whitelist channels
+            // let validChannels = ["toMain"];
+            // if (validChannels.includes(channel)) {
+            //     ipcRenderer.send(channel, data);
+            // }
+            
+            console.log(remote);
+            // remote.getCurrentWindow().close();
+            console.log(channel, data);//html에서 넘기는 값, channel로 구분하면 됩니다.
+            data.callback({result:'성공'});
+        },
+        receive: (channel, func) => {
+            let validChannels = ["fromMain"];
+            if (validChannels.includes(channel)) {
+                // Deliberately strip event as it includes `sender` 
+                ipcRenderer.on(channel, (event, ...args) => func(...args));
+            }
+        }
     }
+);
+
+contextBridge.exposeInMainWorld(
+    "main", {
+        send: (cannel, data) => {
+            remote.getCurrentWindow().close();
+            console.log(channel, data);
+            data.callback({result:'성공'});
+        }
 });

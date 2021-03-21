@@ -9,6 +9,9 @@ export default class MainPage extends React.Component {
     super(props);
   }
 
+  window_close = () => {
+    window.main.send("toMain", {value:1234, key:'key', callback :(result)=> console.log('요청 후 결과 값 : ',result)});
+  };
 
   render() {
 
@@ -20,7 +23,7 @@ export default class MainPage extends React.Component {
             <a className="nav-link" href="#">영어사전</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link disabled" href="#">파파고</a>
+            <a className="nav-link" href="#" onClick={this.window_close}>파파고</a>
           </li>
           <li className="nav-item">
             <a className="nav-link disabled" href="#">참여번역</a>
