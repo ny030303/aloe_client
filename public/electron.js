@@ -5,19 +5,21 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 700,
-    // frame: false,
-
+    width: 450,
+    height: 560,
+    frame: false,
+    backgroundColor: '#1fab89',
+    icon: path.join(__dirname, 'assets/icons/icon.png'),
     webPreferences: {
       nodeIntegration: false, // is default value after Electron v5
       contextIsolation: true, // protect against prototype pollution
       enableRemoteModule: true,
-      preload: path.join(__dirname, "preload.js") // use a preload script
+      preload: path.join(__dirname, "preload.js")// use a preload script
+      
     }
   });
 
-  // mainWindow.setMenu(null);
+  mainWindow.setMenu(null);
   //   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   if (isDev) {

@@ -1,0 +1,49 @@
+
+.logo {
+    width: 80px;
+    height: 33px;
+    background-position: -315px -17px;
+    background-image: url("../../assets/logo.png");
+    margin: 60px auto 0 auto;
+}
+
+.login-form {
+    -webkit-app-region: no-drag;
+    width: 20rem;
+    margin: 30px auto 25px auto;
+    text-align: center;
+}
+
+.login-form > input {
+    margin: 2.5px;
+    font-size: 14px;
+    color: #999;
+}
+
+.login-form > button {
+    margin-top: 7px;
+}
+
+.login-form > label {
+    font-size: 14px;
+    color: #999;
+}
+
+.login-back {
+    width: 16rem;
+    margin: 0 auto;
+}
+
+
+.go-to-signup {
+    font-size: 13px;
+    color: #999;
+}
+
+.go-to-signup > b {
+    color: #62d2a2;
+    cursor: pointer;
+}
+.go-to-signup > b:hover {
+    color : #1fab89;
+}

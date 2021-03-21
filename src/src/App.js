@@ -3,6 +3,8 @@ import './App.css';
 import {HashRouter, Redirect, Route, Switch} from 'react-router-dom';
 import MainPage from "./Routes/MainPage/MainPage";
 import eventService from "./services/EventService";
+import LoginPage from './Routes/LoginPage/LoginPage';
+import MyFrame from './MyFrame/MyFrame';
 // import posed, { PoseGroup } from 'react-pose';
 
 
@@ -46,15 +48,10 @@ class App extends React.Component {
         
         <HashRouter>
           {/* {this.state.isPanorama ? null :  (<MyNewsBox/>)} */}
-
+          <MyFrame/>
           <Switch>
-            <Route exact path="/" component={MainPage}/>
-            {/* <Route exact path="/edit" component={EditPage}/>
-            <Route exact path="/search/:text" component={SearchResultPage}/>
-            <Route exact path="/panorama/:type" component={PanoramaPage}/>
-            <Route exact path="/writing/:writingId" component={WritingPage}/>
-            <Route exact path="/wiki/:title" component={WritingPage}/>
-            <Route exact path="/qna" component={QnaPage}/> */}
+            <PrivateRoute exact authed={this.state.authed} path="/" component={MainPage}/>
+            <LoginRoute exact authed={this.state.authed} path="/login" component={LoginPage}/>
           </Switch>
           {/* {this.state.isPanorama ? null :  (<MyFooter/>)} */}
         </HashRouter>
