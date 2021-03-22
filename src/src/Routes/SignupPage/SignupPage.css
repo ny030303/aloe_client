@@ -1,0 +1,54 @@
+.signup-page {
+    position: relative;
+    margin: 1em 0 0 0;
+}
+
+.signup-header {
+
+}
+
+.signup-header > h4 {
+    margin: 0;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.signup-back {
+    -webkit-app-region: no-drag;
+    position: absolute;
+    top: 0;
+    left: .5em;
+    color: rgb(63,61,86);
+    z-index: 2;
+    padding:.1em;
+}
+
+.signup-back > i {
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.signup-back > i:hover {
+    color: #222;
+}
+.signup-line-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: #bbb;
+}
+
+.signup-line-wrap > * {
+    margin: 1em auto;
+}
+.signup-line-wrap > p  {
+    display: inline-block;
+    font-size: 15px;
+    /* font-weight: bold; */
+}
+
+.signup-line-wrap > hr {
+    width: 35%;
+}

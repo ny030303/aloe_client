@@ -36,5 +36,11 @@ contextBridge.exposeInMainWorld(
             remote.getCurrentWindow().close();
             console.log(channel, data);
             data.callback({result:'성공'});
+        },
+        resize: (cannel, data) => {
+            remote.getCurrentWindow().setContentSize(data.width, data.height);
+            data.callback({result:'성공'});
         }
-});
+        
+    }
+);

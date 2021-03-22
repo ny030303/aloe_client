@@ -4,6 +4,7 @@ import {HashRouter, Redirect, Route, Switch} from 'react-router-dom';
 import MainPage from "./Routes/MainPage/MainPage";
 import eventService from "./services/EventService";
 import LoginPage from './Routes/LoginPage/LoginPage';
+import SignupPage from './Routes/SignupPage/SignupPage';
 import MyFrame from './MyFrame/MyFrame';
 // import posed, { PoseGroup } from 'react-pose';
 
@@ -52,6 +53,7 @@ class App extends React.Component {
           <Switch>
             <PrivateRoute exact authed={this.state.authed} path="/" component={MainPage}/>
             <LoginRoute exact authed={this.state.authed} path="/login" component={LoginPage}/>
+            <Route exact path="/signup" component={SignupPage}/>
           </Switch>
           {/* {this.state.isPanorama ? null :  (<MyFooter/>)} */}
         </HashRouter>
