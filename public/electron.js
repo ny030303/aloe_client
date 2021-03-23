@@ -7,7 +7,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 450,
     height: 560,
-    frame: false,
+    // frame: false,
     backgroundColor: '#1fab89',
     icon: path.join(__dirname, 'assets/icons/icon.png'),
     webPreferences: {
@@ -19,7 +19,10 @@ function createWindow() {
     }
   });
 
-  mainWindow.setMenu(null);
+  // mainWindow.setMenu(null);
+
+
+
   //   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   if (isDev) {

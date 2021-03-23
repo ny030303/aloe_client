@@ -17,16 +17,16 @@ import axios from "axios";
 //   //   })
 //   // };
   
-//   export const signup = (data, callback) => {
-//     const formData = new FormData();
-//     Object.keys(data).forEach(key => formData.append(key, data[key]));
-//     axios.post(`/php/signup.php`, formData).then(res => {
-//       // console.log('putUser:', res.data);
-//       // getUserInfo(data.id, () => {
-//       //   // console.log('pass')
-//       // }, true);
-//       if (callback) callback(res.data);
-//     });
+  export const putUser = (data, callback) => {
+    const formData = new FormData();
+    Object.keys(data).forEach(key => formData.append(key, data[key]));
+    axios.post(`http://localhost:54000/user/signup`, formData).then(res => {
+      // console.log('putUser:', res.data);
+      // getUserInfo(data.id, () => {
+      //   // console.log('pass')
+      // }, true);
+      if (callback) callback(res.data);
+    });
   
-//   };
+  };
   

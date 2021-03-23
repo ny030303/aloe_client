@@ -8,7 +8,7 @@ export default class LoginPage extends React.Component {
   }
 
   gotoSignup = () => {
-    // window.main.resize("toMain", {width:900, height:700, callback :(result)=> console.log('요청 후 결과 값 : ',result)});
+    window.main.resize("toMain", {width:450, height:680, callback :(result)=> {}});
     this.props.history.push("/signup");
   }
 
