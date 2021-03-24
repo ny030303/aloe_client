@@ -1,0 +1,34 @@
+
+.profile-box {
+    position: relative;
+    padding: .4em 0 1.2em 4.1em;
+    width: 100%;
+    margin: .4em 0 0 .5em;
+}
+
+.profile-box > * {
+    /* display: inline-block; */
+}
+
+.user-img {
+    position: absolute;
+    top: .0;
+    left: 0;
+    background-image: url("../../assets/system-users-icon.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 3.5em;
+    height: 3.5em;
+}
+
+.user-name {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.user-memo {
+    font-size: .8em;
+    color: #535b69;
+    margin-left: .1em;
+    font-weight: bold;
+}

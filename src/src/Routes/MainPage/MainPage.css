@@ -33,6 +33,10 @@
     margin: .8em 0;
 }
 
+.main-menu i:hover {
+    color: #505764;
+}
+
 .main-menu  i.on {
     color: #eeeeee;
 }

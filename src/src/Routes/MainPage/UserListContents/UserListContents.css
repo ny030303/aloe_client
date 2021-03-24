@@ -1,11 +1,16 @@
+.user-list-contents {
+    width: 21em;
+}
+
 
 .main-search-label {
-    background-color: #ddd;
+    background-color: #eee;
     padding: 7px 13px;
-    margin: 5px;
+    margin: 2.2em .6em .6em 1em;
     border-radius: 5px;
-    color: #535b69;
+    color: #606979;
     font-size: 1em;
+    width: 19em;
 }
 
 .main-search-label > i {
@@ -16,17 +21,15 @@
     background-color: rgba(0,0,0,0);
     border: 0;
     outline: none;
-    color: #535b69;
+    color: #606979;
+    font-size: .9em;
 }
 
-.myprofile {
-    
-}
-
-.user-img {
-    background-image: url("../../../assets/system-users-icon.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 4em;
-    height: 4em;
+.main-list-title {
+    /* background-color: #eee; */
+    font-weight: bold;
+    color: #606979;
+    padding: .4em 1em;
+    border-bottom: 1px solid #eee;
+    font-size: .9em;
 }

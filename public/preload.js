@@ -2,7 +2,7 @@
 //     contextBridge,
 //     ipcRenderer, remote
 // } = require("electron");
-const {contextBridge, ipcRenderer, remote} = require("electron");
+const {contextBridge, ipcRenderer, remote, Notification, Tray} = require("electron");
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld(
@@ -40,7 +40,16 @@ contextBridge.exposeInMainWorld(
         resize: (cannel, data) => {
             remote.getCurrentWindow().setContentSize(data.width, data.height);
             data.callback({result:'성공'});
+        },
+        toast: (cannel, data) => {
+            // const notification = {
+            //     title: 'Basic Notification',
+            //     body: 'Notification from the Main process'
+            //   }
+            //   new Notification(notification).show();
+
+
+            // tray
         }
-        
     }
 );
