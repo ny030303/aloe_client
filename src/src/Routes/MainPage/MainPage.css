@@ -8,3 +8,41 @@
     background-color: #2291f2 !important;
 }
 
+.main-header {
+    height: 100%;
+    width: 4em;
+    background-color: #393e46;
+    position: fixed;
+}
+
+.main-menu {
+    width: 100%;
+    /* display: flex; */
+    padding: 20px;
+    position: relative;
+    height: 100%;
+}
+
+.main-menu  i {
+    -webkit-app-region: no-drag;
+    font-size: 1.5em;
+    color: #535b69;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    margin: .8em 0;
+}
+
+.main-menu  i.on {
+    color: #eeeeee;
+}
+
+.main-menu-bottom {
+    position: absolute;
+    bottom: 0;
+}
+
+.content-wrap {
+    -webkit-app-region: no-drag;
+}
+

@@ -1,0 +1,32 @@
+
+.main-search-label {
+    background-color: #ddd;
+    padding: 7px 13px;
+    margin: 5px;
+    border-radius: 5px;
+    color: #535b69;
+    font-size: 1em;
+}
+
+.main-search-label > i {
+    margin-right: 5px;
+}
+
+.main-search-input {
+    background-color: rgba(0,0,0,0);
+    border: 0;
+    outline: none;
+    color: #535b69;
+}
+
+.myprofile {
+    
+}
+
+.user-img {
+    background-image: url("../../../assets/system-users-icon.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 4em;
+    height: 4em;
+}
