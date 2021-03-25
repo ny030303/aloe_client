@@ -1,9 +1,16 @@
 
 .profile-box {
     position: relative;
-    padding: .4em 0 1.2em 4.1em;
+    padding: .4em 0 1em 4.1em;
     width: 100%;
-    margin: .4em 0 0 .5em;
+    cursor: pointer;
+    transition: .4s;
+}
+.profile-box:hover {
+    background-color: #404953;
+}
+.profile-box.on {
+    background-color: #404953;
 }
 
 .profile-box > * {
@@ -12,23 +19,27 @@
 
 .user-img {
     position: absolute;
-    top: .0;
-    left: 0;
+    top: 10px;
+    left: 10px;
     background-image: url("../../assets/system-users-icon.png");
     background-repeat: no-repeat;
-    background-size: contain;
-    width: 3.5em;
-    height: 3.5em;
+    background-size: cover;
+    background-position: 50% 50%;
+    border-radius: 50%;
+    /* position: absolute; */
+    width: 2.8em;
+    height: 2.8em;
 }
 
 .user-name {
-    font-size: 1em;
-    font-weight: bold;
+    font-size: .9em;
+    /* font-weight: bold; */
+    color: #fff;
+    margin-top: 6px;
 }
 
 .user-memo {
     font-size: .8em;
-    color: #535b69;
+    color: #69707b;
     margin-left: .1em;
-    font-weight: bold;
 }

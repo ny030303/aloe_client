@@ -12,7 +12,7 @@ export default class UserListContents extends React.Component {
             <div className="user-list-contents">
                 <label htmlFor="main-search" className="main-search-label">
                     <i className="fas fa-search" />
-                    <input id="main-search" type="text" className="main-search-input" placeholder="이름으로 검색" />
+                    <input id="main-search" type="text" className="main-search-input" placeholder="Search..." />
                 </label>
                 <div className="main-list-title">프로필</div>
                 <ProfileBox/>
