@@ -51,11 +51,11 @@ class App extends React.Component {
           {/* {this.state.isPanorama ? null :  (<MyNewsBox/>)} */}
           <MyFrame/>
           <Switch>
-            {/* <PrivateRoute exact authed={this.state.authed} path="/" component={MainPage}/> */}
-            {/* <LoginRoute exact authed={this.state.authed} path="/login" component={LoginPage}/> */}
-            <Route exact path="/login" component={LoginPage}/>
+            <PrivateRoute exact authed={this.state.authed} path="/" component={MainPage}/>
+            <LoginRoute exact authed={this.state.authed} path="/login" component={LoginPage}/>
+            {/* <Route exact path="/login" component={LoginPage}/> */}
             <Route exact path="/signup" component={SignupPage}/>
-            <Route exact path="/" component={MainPage}/>
+            {/* <Route exact path="/" component={MainPage}/> */}
             
           </Switch>
           {/* {this.state.isPanorama ? null :  (<MyFooter/>)} */}

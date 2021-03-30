@@ -25,16 +25,14 @@ export default class SignupPage extends React.Component {
 
   signup = () => {
     const {state} = this;
-    putUser({
+    window.db.signup("signupPage", { userData: {
       id: state.id,
       pwd: state.pwd,
       name: state.name,
       birth: state.birth,
       profileimg: state.profileimg,
       memo: null
-    }, (data) => {
-      console.log(data);
-      alertDialog.show("회원가입", data);
+    }, callback: (result) => console.log('요청 후 결과 값 : ', result) });
       // if (Number(data.result) === 1) {
       //   alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
       //   this.props.history.push("/login");
@@ -42,8 +40,6 @@ export default class SignupPage extends React.Component {
       // } else {
       //   alertDialog.show("회원가입 실패!", "회원가입에 실패 했습니다.");
       // }
-
-    });
   }
 
   render() {

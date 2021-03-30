@@ -2,7 +2,12 @@
 //     contextBridge,
 //     ipcRenderer, remote
 // } = require("electron");
-const {contextBridge, ipcRenderer, remote, Notification, Tray} = require("electron");
+const { contextBridge, ipcRenderer, remote, Notification, Tray } = require("electron");
+const axios = require('axios');
+axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld(
@@ -14,11 +19,11 @@ contextBridge.exposeInMainWorld(
             // if (validChannels.includes(channel)) {
             //     ipcRenderer.send(channel, data);
             // }
-            
+
             console.log(remote);
             // remote.getCurrentWindow().close();
             console.log(channel, data);//html에서 넘기는 값, channel로 구분하면 됩니다.
-            data.callback({result:'성공'});
+            data.callback({ result: '성공' });
         },
         receive: (channel, func) => {
             let validChannels = ["fromMain"];
@@ -32,16 +37,16 @@ contextBridge.exposeInMainWorld(
 
 contextBridge.exposeInMainWorld(
     "main", {
-        send: (cannel, data) => {
+        send: (channel, data) => {
             remote.getCurrentWindow().close();
             console.log(channel, data);
-            data.callback({result:'성공'});
+            data.callback({ result: '성공' });
         },
-        resize: (cannel, data) => {
+        resize: (channel, data) => {
             remote.getCurrentWindow().setContentSize(data.width, data.height);
-            data.callback({result:'성공'});
+            data.callback({ result: '성공' });
         },
-        toast: (cannel, data) => {
+        toast: (channel, data) => {
             // const notification = {
             //     title: 'Basic Notification',
             //     body: 'Notification from the Main process'
@@ -50,6 +55,20 @@ contextBridge.exposeInMainWorld(
 
 
             // tray
+        }
+    }
+);
+contextBridge.exposeInMainWorld(
+    "db", {
+        signup: (channel, data) => {
+            console.log(channel, data);
+            const formData = new FormData();
+            Object.keys(data.userData).forEach(key => formData.append(key, data[key]));
+            axios.post(`http://localhost:54000/user/signup`, formData).then(res => {
+                console.log('putUser:', res.data);
+                if (callback) callback(res.data);
+            });
+            data.callback({ result: '성공' });
         }
     }
 );
