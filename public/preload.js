@@ -62,9 +62,11 @@ contextBridge.exposeInMainWorld(
     "db", {
         signup: (channel, data) => {
             console.log(channel, data);
-            const formData = new FormData();
-            Object.keys(data.userData).forEach(key => formData.append(key, data[key]));
-            axios.post(`http://localhost:54000/user/signup`, formData).then(res => {
+            // , 
+            // {headers: {
+            //     'Content-Type': 'application/json',
+            // }}
+            axios.post(`http://localhost:54000/user/signup`, data.userData).then(res => {
                 console.log('putUser:', res.data);
                 if (callback) callback(res.data);
             });
