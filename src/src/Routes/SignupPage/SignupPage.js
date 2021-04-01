@@ -14,7 +14,8 @@ export default class SignupPage extends React.Component {
       pwdCheckText: "",
       name: "",
       nameCheckText: "",
-      profileimg: null
+      profileimg: null,
+      fileData: null
     };
   }
 
@@ -25,15 +26,22 @@ export default class SignupPage extends React.Component {
 
   signup = () => {
     const { state } = this;
-    window.db.signup("signupPage", {
-      userData: {
-        id: state.id,
-        pwd: state.pwd,
-        name: state.name,
-        profileimg: state.profileimg,
-        memo: null
-      }, callback: (result) => console.log('요청 후 결과 값 : ', result)
+    // window.db.signup("signupPage", {
+    //   userData: {
+    //     id: state.id,
+    //     pwd: state.pwd,
+    //     name: state.name,
+    //     profileimg: state.profileimg,
+    //     memo: null
+    //   }, callback: (result) => console.log('요청 후 결과 값 : ', result)
+    // });
+    console.log({"profile_img": state.fileData});
+    window.db.fileUpload("signupPage", {
+      fileData: {"profile_img": state.fileData},
+      callback: (result) => {}
     });
+
+
     // if (Number(data.result) === 1) {
     //   alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
     //   this.props.history.push("/login");
@@ -48,6 +56,11 @@ export default class SignupPage extends React.Component {
 
   changeUserProfileImg = (e) => {
     // this.showBgMenu();
+    // 파일 데이터 전송
+    console.log(e.target.files[0]);
+    this.setState({fileData: e.target.files[0]});
+
+    //profileimg base64 인코딩
     fileToDataURL(e.target.files[0]).then(res => {
       let canvas = document.createElement("canvas");
       canvas.setAttribute("width", 128);
@@ -88,7 +101,7 @@ export default class SignupPage extends React.Component {
                 <label htmlFor="user_img_file" className="file-plus">
                   <i className="fas fa-plus"></i>
                 </label>
-                <input type="file" accept="image/*" id="user_img_file" onChange={this.changeUserProfileImg} />
+                <input type="file" accept="image/*" id="user_img_file"  name="profile_img" onChange={this.changeUserProfileImg} />
               </div>
           </div>
 

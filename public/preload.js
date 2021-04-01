@@ -71,6 +71,15 @@ contextBridge.exposeInMainWorld(
                 if (callback) callback(res.data);
             });
             data.callback({ result: '성공' });
+        },
+        fileUpload: (channel, data) => {
+            const formData = new FormData();
+            formData.append('profile_img', data.fileData);
+
+            axios.post(`http://localhost:54000/user/upload`, formData).then(res => {
+                console.log('fileData:', res.data);
+                data.callback(res.data);
+            });
         }
     }
 );
