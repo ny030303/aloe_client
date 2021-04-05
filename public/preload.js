@@ -6,7 +6,7 @@ const { contextBridge, ipcRenderer, remote, Notification, Tray } = require("elec
 const axios = require('axios');
 axios.defaults.baseURL = 'http://localhost:3000';
 axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
-  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
@@ -58,27 +58,28 @@ contextBridge.exposeInMainWorld(
         }
     }
 );
+
+const multipartFromDataConfig = { headers: { 'content-type': 'multipart/form-data'}};
 contextBridge.exposeInMainWorld(
     "db", {
         signup: (channel, data) => {
             console.log(channel, data);
-            // , 
-            // {headers: {
-            //     'Content-Type': 'application/json',
-            // }}
             axios.post(`http://localhost:54000/user/signup`, data.userData).then(res => {
-                console.log('putUser:', res.data);
-                if (callback) callback(res.data);
+                console.log('putUser:', res);
+                // data.callback({ result: '성공' });
+                if (data.callback) data.callback(res.data.result);
             });
-            data.callback({ result: '성공' });
+            
         },
         fileUpload: (channel, data) => {
             const formData = new FormData();
-            formData.append('profile_img', data.fileData);
-
-            axios.post(`http://localhost:54000/user/upload`, formData).then(res => {
+            formData.append('profile_img',data.img);
+            // formData.append('extension', data.img.type.split('/')[1]);
+            
+            axios.post(`http://localhost:54000/user/upload`, formData, multipartFromDataConfig).then(res => {
                 console.log('fileData:', res.data);
-                data.callback(res.data);
+                return res.data;
+                // data.callback(res.data);
             });
         }
     }
