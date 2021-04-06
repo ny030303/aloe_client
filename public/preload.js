@@ -59,7 +59,7 @@ contextBridge.exposeInMainWorld(
     }
 );
 
-const multipartFromDataConfig = { headers: { 'content-type': 'multipart/form-data'}};
+// const options = { headers: { 'Content-Type': 'multipart/form-data'}};
 contextBridge.exposeInMainWorld(
     "db", {
         signup: (channel, data) => {
@@ -67,16 +67,19 @@ contextBridge.exposeInMainWorld(
             axios.post(`http://localhost:54000/user/signup`, data.userData).then(res => {
                 console.log('putUser:', res);
                 // data.callback({ result: '성공' });
-                if (data.callback) data.callback(res.data.result);
+                if (data.callback) data.callback(res.data);
             });
             
         },
-        fileUpload: (channel, data) => {
-            const formData = new FormData();
-            formData.append('profile_img',data.img);
-            // formData.append('extension', data.img.type.split('/')[1]);
+        fileUpload: (channel, param) => {
+            const data = {
+                img: param.img
+            };
+            console.log(data);
             
-            axios.post(`http://localhost:54000/user/upload`, formData, multipartFromDataConfig).then(res => {
+            // formData.append('extension', data.img.type.split('/')[1]);
+
+            axios.post('http://localhost:54000/user/upload', data).then(res => {
                 console.log('fileData:', res.data);
                 return res.data;
                 // data.callback(res.data);

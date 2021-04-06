@@ -25,29 +25,32 @@ export default class SignupPage extends React.Component {
     this.props.history.push("/");
   }
 
-  signup = () => {
+  signup = async () => {
     const { state } = this;
-    window.db.signup("signupPage", {
-      userData: {
-        id: state.id,
-        pwd: state.pwd,
-        name: state.name,
-        profileimg: state.profileimg,
-        memo: null
-      }, callback: (result) => {
-        console.log(result);
-        if(Number(result.data.result) == 1) {
-          alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
-          this.gotoBack();
-        }
-      }
-    });
-
-    // console.log({"img": this.myImg.current.files[0]});
-    // window.db.fileUpload("signupPage", {
-    //   "img": this.myImg.current.files[0],
-    //   callback: (result) => {}
+    // window.db.signup("signupPage", {
+    //   userData: {
+    //     id: state.id,
+    //     pwd: state.pwd,
+    //     name: state.name,
+    //     profileimg: state.profileimg,
+    //     memo: null
+    //   }, callback: (result) => {
+    //     console.log(result);
+    //     if (Number(result.result) == 1) {
+    //       alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
+    //       this.gotoBack();
+    //     }
+    //   }
     // });
+
+    
+    let imgData = await fileToDataURL(this.myImg.current.files[0]);
+    console.log({ "img": imgData});
+
+    window.db.fileUpload("signupPage", {
+      "img": imgData,
+      callback: (result) => { }
+    });
 
   }
 
@@ -95,12 +98,12 @@ export default class SignupPage extends React.Component {
               (profileimg === null) ? (<div className="userProfileImg" />)
                 : (<div className="userProfileImg" style={{ backgroundImage: `url(${profileimg})` }} />)
             }
-              <div className="filebox">
-                <label htmlFor="user_img_file" className="file-plus">
-                  <i className="fas fa-plus"></i>
-                </label>
-                <input type="file" accept="image/*" id="user_img_file" ref={this.myImg} name="profile_img" onChange={this.changeUserProfileImg} />
-              </div>
+            <div className="filebox">
+              <label htmlFor="user_img_file" className="file-plus">
+                <i className="fas fa-plus"></i>
+              </label>
+              <input type="file" accept="image/*" id="user_img_file" ref={this.myImg} name="profile_img" onChange={this.changeUserProfileImg} />
+            </div>
           </div>
 
           <div className="tf_required">계정 아이디</div>
