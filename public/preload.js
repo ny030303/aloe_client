@@ -62,28 +62,32 @@ contextBridge.exposeInMainWorld(
 // const options = { headers: { 'Content-Type': 'multipart/form-data'}};
 contextBridge.exposeInMainWorld(
     "db", {
-        signup: (channel, data) => {
-            console.log(channel, data);
-            axios.post(`http://localhost:54000/user/signup`, data.userData).then(res => {
-                console.log('putUser:', res);
-                // data.callback({ result: '성공' });
+        login: (channel, param) => {
+            axios.post(`http://localhost:54000/auth/local`, data.userData).then(res => {
+                console.log('signup:', res.data);
                 if (data.callback) data.callback(res.data);
             });
-            
+        },
+        signup: (channel, data) => {
+            axios.post(`http://localhost:54000/user/signup`, data.userData).then(res => {
+                console.log('signup:', res.data);
+                if (data.callback) data.callback(res.data);
+            });
         },
         fileUpload: (channel, param) => {
-            const data = {
-                img: param.img
-            };
+            const data = { img: param.img };
             console.log(data);
-            
-            // formData.append('extension', data.img.type.split('/')[1]);
-
             axios.post('http://localhost:54000/user/upload', data).then(res => {
-                console.log('fileData:', res.data);
-                return res.data;
-                // data.callback(res.data);
+                console.log('fileUpload:', res.data);
+                if (param.callback) param.callback(res.data);
             });
-        }
+        },
+        // getFileURL: (channel, param) => {
+        //     console.log(param);
+        //     axios.get('http://localhost:54000/images/'+ param.fileName).then(res => {
+        //         console.log('getFileURL:', res.data);
+        //         if (param.callback) param.callback(res.data);
+        //     });
+        // }
     }
 );

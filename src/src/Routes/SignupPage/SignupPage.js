@@ -14,7 +14,8 @@ export default class SignupPage extends React.Component {
       pwdCheckText: "",
       name: "",
       nameCheckText: "",
-      profileimg: null
+      profileimg: null,
+      profileURL: null
     };
 
     this.myImg = React.createRef();
@@ -27,31 +28,29 @@ export default class SignupPage extends React.Component {
 
   signup = async () => {
     const { state } = this;
-    // window.db.signup("signupPage", {
-    //   userData: {
-    //     id: state.id,
-    //     pwd: state.pwd,
-    //     name: state.name,
-    //     profileimg: state.profileimg,
-    //     memo: null
-    //   }, callback: (result) => {
-    //     console.log(result);
-    //     if (Number(result.result) == 1) {
-    //       alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
-    //       this.gotoBack();
-    //     }
-    //   }
-    // });
-
-    
     let imgData = await fileToDataURL(this.myImg.current.files[0]);
-    console.log({ "img": imgData});
+    // console.log({ "img": imgData});
 
-    window.db.fileUpload("signupPage", {
-      "img": imgData,
-      callback: (result) => { }
+    await window.db.fileUpload("signupPage", {"img": imgData,
+      callback: (fRes) => {
+        this.setState({profileURL: fRes.fileName});
+        let userData = {
+          id: state.id,
+          pwd: state.pwd,
+          name: state.name,
+          profileURL: this.state.profileURL,
+          memo: ''
+        };
+        window.db.signup("signupPage", {userData, 
+          callback: (sRes) => {
+            if (Number(sRes.result) == 1) {
+              alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
+              this.gotoBack();
+            }
+          }
+        });
+      }
     });
-
   }
 
   idEvent = (e) => { this.setState({ id: e.target.value.trim() }); }
@@ -59,7 +58,7 @@ export default class SignupPage extends React.Component {
   nameEvent = (e) => { this.setState({ name: e.target.value.trim() }); }
 
   changeUserProfileImg = (e) => {
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
 
     //profileimg base64 인코딩
     fileToDataURL(e.target.files[0]).then(res => {
