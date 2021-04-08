@@ -63,9 +63,10 @@ contextBridge.exposeInMainWorld(
 contextBridge.exposeInMainWorld(
     "db", {
         login: (channel, param) => {
-            axios.post(`http://localhost:54000/auth/local`, data.userData).then(res => {
-                console.log('signup:', res.data);
-                if (data.callback) data.callback(res.data);
+            console.log(param);
+            axios.post(`http://localhost:54000/auth/local`, {id: param.id, pwd: param.pwd}).then(res => {
+                console.log('login:', res.data);
+                if (param.callback) param.callback(res.data);
             });
         },
         signup: (channel, data) => {

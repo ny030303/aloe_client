@@ -1,13 +1,14 @@
 import * as React from 'react';
 import "./LoginPage.css";
 import svg from '../../assets/chat.svg';
+import alertDialog from '../../services/AlertDialog/AlertDialog';
 export default class LoginPage extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      id: null,
-      pwd: null
+      id: "",
+      pwd: ""
     }
   }
   // window.main.resize("toMain", {width:450, height:680, callback :(result)=> {}});
@@ -17,7 +18,20 @@ export default class LoginPage extends React.Component {
 
 
   loginEvent = () => {
-    window.db.login("LoginPage", {userData: {email: this.state.id, password: this.state.pwd}, callback: (res) => {}});
+    if(this.state.id != "" && this.state.pwd != "") {
+      window.db.login("LoginPage", {id: this.state.id, pwd: this.state.pwd,
+      callback: (res) => {
+        console.log(res);
+        if(res.result.id) {
+          alertDialog.show("로그인 성공", "");
+        } else {
+          alertDialog.show("로그인 실패", "로그인에 실패했습니다.");
+        }
+      }});
+    } else {
+      alertDialog.show("로그인 실패", "값이 빈 부분이 있습니다.");
+    }
+    
   };
 
   render() {

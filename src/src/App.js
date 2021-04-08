@@ -39,7 +39,7 @@ class App extends React.Component {
 
     // this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // this.state.authed = this.userInfo ? true : false;
-    // eventService.listenEvent('loginStatus', logined => this.setState({authed: logined}));
+    eventService.listenEvent('loginStatus', logined => this.setState({authed: logined}));
   }
 
 
