@@ -35,14 +35,17 @@ class App extends React.Component {
     super(props);
     this.state = {
       authed: false,
+      userData: null
     };
-
-    // this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    // this.state.authed = this.userInfo ? true : false;
-    eventService.listenEvent('loginStatus', logined => this.setState({authed: logined}));
   }
 
+  componentDidMount() {
+    window.db.checkIsLogin("App", {callback: (res) => {
+      this.setState({userData: res.result, authed: res.result ? true : false});
+    }});
 
+    eventService.listenEvent('loginStatus', data => this.setState({authed: data.authed, userData: data.userData}));
+  }
   render() {
     return (
       <div className="App">

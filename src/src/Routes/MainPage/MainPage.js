@@ -1,11 +1,14 @@
 import * as React from 'react';
+import "./MainPage.css";
 import alertDialog from '../../services/AlertDialog/AlertDialog';
 import ChatListContents from './ChatListContents/ChatListContents';
-import "./MainPage.css";
 import UserListContents from './UserListContents/UserListContents';
 import MainHeader from './MainHeader/MainHeader';
 import eventService from '../../services/EventService';
 import ChattingRoom from './ChattingRoom/ChattingRoom';
+
+import io from "socket.io-client";
+// const socket = io("http://localhost:54000/");
 
 export default class MainPage extends React.Component {
 
@@ -17,16 +20,13 @@ export default class MainPage extends React.Component {
     };
     this.w = 400;
     this.h = 600;
-    this.openChattingRoom();
   }
 
   componentDidMount() {
-    
     eventService.listenEvent("openChatting", (userName) => {
       if(!this.state.isOpenChatting) {this.w = 900; this.h = 600;}
       else {this.w = 400; this.h = 600;}
       this.openChattingRoom();
-      
     });
   }
 
@@ -40,12 +40,9 @@ export default class MainPage extends React.Component {
      }});
   }
 
-  changeMenuNum = (e) => {
-    this.setState({ menuNum: e.target.dataset.num });
-   }
+  changeMenuNum = (e) => this.setState({ menuNum: e.target.dataset.num });
 
   render() {
-
     return (
       <div className="main-page page">
         <MainHeader menuNum={this.state.menuNum} changeMenuNum={this.changeMenuNum}/>

@@ -5,6 +5,7 @@
 const { contextBridge, ipcRenderer, remote, Notification, Tray } = require("electron");
 const axios = require('axios');
 axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.headers.get['Content-Type'] ='application/json;charset=utf-8';
 axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
@@ -62,9 +63,16 @@ contextBridge.exposeInMainWorld(
 // const options = { headers: { 'Content-Type': 'multipart/form-data'}};
 contextBridge.exposeInMainWorld(
     "db", {
+        checkIsLogin:(channel, param) => {
+            console.log(param);
+            axios.get(`http://localhost:54000/`, { withCredentials : true }).then(res => {
+                console.log('checkIsLogin:', res.data);
+                if (param.callback) param.callback(res.data);
+            });
+        },
         login: (channel, param) => {
             console.log(param);
-            axios.post(`http://localhost:54000/auth/local`, {id: param.id, pwd: param.pwd}).then(res => {
+            axios.post(`http://localhost:54000/auth/local`, {id: param.id, pwd: param.pwd}, { withCredentials : true }).then(res => {
                 console.log('login:', res.data);
                 if (param.callback) param.callback(res.data);
             });
@@ -75,6 +83,14 @@ contextBridge.exposeInMainWorld(
                 if (data.callback) data.callback(res.data);
             });
         },
+        logout:(channel, param) => {
+            console.log(param);
+            axios.get(`http://localhost:54000/auth/logout`, { withCredentials : true }).then(res => {
+                console.log('logout:', res.data);
+                if (param.callback) param.callback(res.data);
+            });
+        },
+
         fileUpload: (channel, param) => {
             const data = { img: param.img };
             console.log(data);

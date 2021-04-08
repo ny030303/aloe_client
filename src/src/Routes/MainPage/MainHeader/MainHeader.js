@@ -1,11 +1,19 @@
 import * as React from 'react';
 import "./MainHeader.css";
+import alertDialog from '../../../services/AlertDialog/AlertDialog';
+import eventService from '../../../services/EventService';
 
 export default class MainHeader extends React.Component {
 
     constructor(props) {
         super(props);
     }
+
+    logoutEvent = () => {
+        eventService.emitEvent('loginStatus', {authed: false, userData: null});
+        window.db.logout("MainHeader", {callback: (res) => alertDialog.show("메시지", res.result)});
+    }
+
     render() {
         return (
             <div className="main-header">
@@ -34,7 +42,7 @@ export default class MainHeader extends React.Component {
                     </div>
                     <div className="main-menu-bottom">
                         <i className="fas fa-bell" />
-                        <i className="fas fa-sign-out-alt" />
+                        <i className="fas fa-sign-out-alt" onClick={this.logoutEvent}/>
                     </div>
                 </div>
             </div>

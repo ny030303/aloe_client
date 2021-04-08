@@ -2,6 +2,7 @@ import * as React from 'react';
 import "./LoginPage.css";
 import svg from '../../assets/chat.svg';
 import alertDialog from '../../services/AlertDialog/AlertDialog';
+import eventService from '../../services/EventService';
 export default class LoginPage extends React.Component {
 
   constructor(props) {
@@ -23,9 +24,11 @@ export default class LoginPage extends React.Component {
       callback: (res) => {
         console.log(res);
         if(res.result.id) {
-          alertDialog.show("로그인 성공", "");
+          alertDialog.show("메시지", "로그인 성공");
+          eventService.emitEvent('loginStatus', {authed: true, userData: res.result});
+          
         } else {
-          alertDialog.show("로그인 실패", "로그인에 실패했습니다.");
+          alertDialog.show("로그인 실패", res.result);
         }
       }});
     } else {
