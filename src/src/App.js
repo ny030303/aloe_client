@@ -7,7 +7,13 @@ import LoginPage from './Routes/LoginPage/LoginPage';
 import SignupPage from './Routes/SignupPage/SignupPage';
 import MyFrame from './MyFrame/MyFrame';
 // import posed, { PoseGroup } from 'react-pose';
-
+import io from "socket.io-client";
+const socket = io("http://localhost:54000/", {
+  withCredentials: true,
+  extraHeaders: {
+    "my-custom-header": "abcd"
+  }
+});
 
 const PrivateRoute = ({component: Component, authed, ...rest}) => (
   <Route

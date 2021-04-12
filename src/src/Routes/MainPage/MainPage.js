@@ -7,8 +7,7 @@ import MainHeader from './MainHeader/MainHeader';
 import eventService from '../../services/EventService';
 import ChattingRoom from './ChattingRoom/ChattingRoom';
 
-import io from "socket.io-client";
-// const socket = io("http://localhost:54000/");
+
 
 export default class MainPage extends React.Component {
 
@@ -23,6 +22,7 @@ export default class MainPage extends React.Component {
   }
 
   componentDidMount() {
+    
     eventService.listenEvent("openChatting", (userName) => {
       if(!this.state.isOpenChatting) {this.w = 900; this.h = 600;}
       else {this.w = 400; this.h = 600;}
