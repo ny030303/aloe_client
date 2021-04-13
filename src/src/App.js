@@ -7,13 +7,7 @@ import LoginPage from './Routes/LoginPage/LoginPage';
 import SignupPage from './Routes/SignupPage/SignupPage';
 import MyFrame from './MyFrame/MyFrame';
 // import posed, { PoseGroup } from 'react-pose';
-import io from "socket.io-client";
-const socket = io("http://localhost:54000/", {
-  withCredentials: true,
-  extraHeaders: {
-    "my-custom-header": "abcd"
-  }
-});
+import {socket} from './services/SocketService';
 
 const PrivateRoute = ({component: Component, authed, ...rest}) => (
   <Route
@@ -40,18 +34,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authed: false,
-      userData: null
+      authed: false
     };
-  }
-
-  componentDidMount() {
+    
     window.db.checkIsLogin("App", {callback: (res) => {
-      this.setState({userData: res.result, authed: res.result ? true : false});
+      this.setState({authed: res.result ? true : false});
+      socket.emit('login-check', res.result);
     }});
 
-    eventService.listenEvent('loginStatus', data => this.setState({authed: data.authed, userData: data.userData}));
+    eventService.listenEvent('loginStatus', data => {
+      this.setState({authed: data.authed});
+      socket.emit('login', data.userData);
+    });
   }
+
   render() {
     return (
       <div className="App">

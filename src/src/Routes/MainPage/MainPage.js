@@ -6,22 +6,29 @@ import UserListContents from './UserListContents/UserListContents';
 import MainHeader from './MainHeader/MainHeader';
 import eventService from '../../services/EventService';
 import ChattingRoom from './ChattingRoom/ChattingRoom';
+import { socket } from '../../services/SocketService';
 
 
 
 export default class MainPage extends React.Component {
-
+  // userData
   constructor(props) {
     super(props);
     this.state = {
       menuNum: 0,
-      isOpenChatting: false
+      isOpenChatting: false,
+      userData: null
     };
     this.w = 400;
     this.h = 600;
+    
+    socket.on('login-ok', params => {
+      this.setState({userData: params.user_data});
+    });
   }
 
   componentDidMount() {
+    
     
     eventService.listenEvent("openChatting", (userName) => {
       if(!this.state.isOpenChatting) {this.w = 900; this.h = 600;}
@@ -32,6 +39,7 @@ export default class MainPage extends React.Component {
 
   componentWillMount() {
     // window.main.resize("toMain", { width: 400, height: 600, callback: (result) => {} });
+    
   }
 
   openChattingRoom = () => {
@@ -45,7 +53,7 @@ export default class MainPage extends React.Component {
   render() {
     return (
       <div className="main-page page">
-        <MainHeader menuNum={this.state.menuNum} changeMenuNum={this.changeMenuNum}/>
+        <MainHeader menuNum={this.state.menuNum} changeMenuNum={this.changeMenuNum} userData={this.state.userData}/>
         <div className="content-wrap">
           {
             (this.state.menuNum == 0) ?

@@ -2,25 +2,32 @@ import * as React from 'react';
 import "./MainHeader.css";
 import alertDialog from '../../../services/AlertDialog/AlertDialog';
 import eventService from '../../../services/EventService';
+import { serverLink, socket } from '../../../services/SocketService';
 
 export default class MainHeader extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
     }
 
     logoutEvent = () => {
         eventService.emitEvent('loginStatus', {authed: false, userData: null});
+        socket.emit('logout');
         window.db.logout("MainHeader", {callback: (res) => alertDialog.show("메시지", res.result)});
     }
 
     render() {
+        let {props} = this;
+        let image;
+        if(this.props.userData) image = serverLink + "images/"+ this.props.userData.profileURL;
+        console.log(image);
         return (
             <div className="main-header">
                 <div className="main-menu">
                     <div className="main-menu-top">
                         <div className="main-header-u">
-                            <div className="main-header-u-img" />
+                            <div className="main-header-u-img" style={this.props.userData ? {backgroundImage: `url(${image})`} : {}}/>
                             <div className="green-dot" />
                         </div>
                         <div className={((this.props.menuNum == 0) ? "on " : "") + "main-header-menu-box"}

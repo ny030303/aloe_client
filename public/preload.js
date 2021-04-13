@@ -64,29 +64,29 @@ contextBridge.exposeInMainWorld(
 contextBridge.exposeInMainWorld(
     "db", {
         checkIsLogin:(channel, param) => {
-            console.log(param);
+            // console.log(param);
             axios.get(`http://localhost:54000/`, { withCredentials : true }).then(res => {
-                console.log('checkIsLogin:', res.data);
+                // console.log('checkIsLogin:', res.data);
                 if (param.callback) param.callback(res.data);
             });
         },
         login: (channel, param) => {
             console.log(param);
             axios.post(`http://localhost:54000/auth/local`, {id: param.id, pwd: param.pwd}, { withCredentials : true }).then(res => {
-                console.log('login:', res.data);
+                // console.log('login:', res.data);
                 if (param.callback) param.callback(res.data);
             });
         },
         signup: (channel, data) => {
             axios.post(`http://localhost:54000/user/signup`, data.userData).then(res => {
-                console.log('signup:', res.data);
+                // console.log('signup:', res.data);
                 if (data.callback) data.callback(res.data);
             });
         },
         logout:(channel, param) => {
             console.log(param);
             axios.get(`http://localhost:54000/auth/logout`, { withCredentials : true }).then(res => {
-                console.log('logout:', res.data);
+                // console.log('logout:', res.data);
                 if (param.callback) param.callback(res.data);
             });
         },
@@ -95,7 +95,7 @@ contextBridge.exposeInMainWorld(
             const data = { img: param.img };
             console.log(data);
             axios.post('http://localhost:54000/user/upload', data).then(res => {
-                console.log('fileUpload:', res.data);
+                // console.log('fileUpload:', res.data);
                 if (param.callback) param.callback(res.data);
             });
         },
