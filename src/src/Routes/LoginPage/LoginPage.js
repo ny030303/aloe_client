@@ -3,6 +3,7 @@ import "./LoginPage.css";
 import svg from '../../assets/chat.svg';
 import alertDialog from '../../services/AlertDialog/AlertDialog';
 import eventService from '../../services/EventService';
+import { socket } from '../../services/SocketService';
 export default class LoginPage extends React.Component {
 
   constructor(props) {
@@ -22,11 +23,11 @@ export default class LoginPage extends React.Component {
     if(this.state.id != "" && this.state.pwd != "") {
       window.db.login("LoginPage", {id: this.state.id, pwd: this.state.pwd,
       callback: (res) => {
-        console.log(res);
+        // console.log(res);
         if(res.result.id) {
           alertDialog.show("메시지", "로그인 성공");
           eventService.emitEvent('loginStatus', {authed: true, userData: res.result});
-          
+          socket.emit('login', res.result);
         } else {
           alertDialog.show("로그인 실패", res.result);
         }

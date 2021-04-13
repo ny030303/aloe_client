@@ -16,11 +16,10 @@ export default class MainPage extends React.Component {
     super(props);
     this.state = {
       menuNum: 0,
-      isOpenChatting: false,
       userData: null
     };
-    this.w = 400;
-    this.h = 600;
+    this.w = 1250;
+    this.h = 750;
     
     socket.on('login-ok', params => {
       this.setState({userData: params.user_data});
@@ -28,25 +27,23 @@ export default class MainPage extends React.Component {
   }
 
   componentDidMount() {
-    
-    
-    eventService.listenEvent("openChatting", (userName) => {
-      if(!this.state.isOpenChatting) {this.w = 900; this.h = 600;}
-      else {this.w = 400; this.h = 600;}
-      this.openChattingRoom();
-    });
+    // eventService.listenEvent("openChatting", (userName) => {
+    //   if(!this.state.isOpenChatting) {this.w = 900; this.h = 600;}
+    //   else {this.w = 400; this.h = 600;}
+    //   // this.openChattingRoom();
+    // });
   }
 
   componentWillMount() {
-    // window.main.resize("toMain", { width: 400, height: 600, callback: (result) => {} });
+    window.main.resize("toMain", {width: this.w, height: this.h, callback: (result) => {} });
     
   }
 
-  openChattingRoom = () => {
-    window.main.resize("toMain", { width: this.w, height: this.h, callback: (result) => {
-      this.setState({ isOpenChatting: !this.state.isOpenChatting });
-     }});
-  }
+  // openChattingRoom = () => {
+  //   window.main.resize("toMain", { width: this.w, height: this.h, callback: (result) => {
+  //     this.setState({ isOpenChatting: !this.state.isOpenChatting });
+  //    }});
+  // }
 
   changeMenuNum = (e) => this.setState({ menuNum: e.target.dataset.num });
 
@@ -57,7 +54,7 @@ export default class MainPage extends React.Component {
         <div className="content-wrap">
           {
             (this.state.menuNum == 0) ?
-              (<UserListContents />) :
+              (<UserListContents profileData={this.state.userData}/>) :
               (this.state.menuNum == 1) ?
                 (<ChatListContents />) :
                 (this.state.menuNum == 2) ?
@@ -66,10 +63,7 @@ export default class MainPage extends React.Component {
           }
           {/* --- chatting --- */}
 
-          {
-            this.state.isOpenChatting ? 
-            (<ChattingRoom/>) : (<></>)
-          }
+          <ChattingRoom/>
         </div>
       </div>
     );

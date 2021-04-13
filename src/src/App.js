@@ -44,7 +44,6 @@ class App extends React.Component {
 
     eventService.listenEvent('loginStatus', data => {
       this.setState({authed: data.authed});
-      socket.emit('login', data.userData);
     });
   }
 

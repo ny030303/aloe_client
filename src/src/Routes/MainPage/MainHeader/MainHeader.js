@@ -8,20 +8,19 @@ export default class MainHeader extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
+        // console.log(props);
     }
 
     logoutEvent = () => {
-        eventService.emitEvent('loginStatus', {authed: false, userData: null});
         socket.emit('logout');
         window.db.logout("MainHeader", {callback: (res) => alertDialog.show("메시지", res.result)});
+        eventService.emitEvent('loginStatus', {authed: false, userData: null});
     }
 
     render() {
         let {props} = this;
         let image;
         if(this.props.userData) image = serverLink + "images/"+ this.props.userData.profileURL;
-        console.log(image);
         return (
             <div className="main-header">
                 <div className="main-menu">

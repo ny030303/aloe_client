@@ -8,14 +8,18 @@ export default class ChatListContents extends React.Component {
         super(props);
     }
 
-    toast = () => {
-        window.main.toast("toMain", {callback: (result) => {}});
-    }
-
     render() {
         return (
             <div className="chat-list-contents">
-                <button onClick={this.toast}>click toast</button>
+                <div className="chat-group-box">
+                    <div className="chat-group-title">Title</div>
+                    <div className="group-people-profile-wrap">
+                        <div className="chat-group-img"/>
+                        <div className="chat-group-img"/>
+                        <div className="chat-group-img"/>
+                    </div>
+                   
+                </div>
             </div>
         )
     }

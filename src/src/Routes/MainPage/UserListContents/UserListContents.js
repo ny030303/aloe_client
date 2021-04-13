@@ -15,12 +15,12 @@ export default class UserListContents extends React.Component {
                     <input id="main-search" type="text" className="main-search-input" placeholder="Search..." />
                 </label>
                 <div className="main-list-title">프로필</div>
-                <ProfileBox/>
-                <div className="main-list-title">친구(1)</div>
+                <ProfileBox userData={this.props.profileData}/>
+                <div className="main-list-title">친구(0)</div>
                 <div className="userList">
+                    {/* <ProfileBox/>
                     <ProfileBox/>
-                    <ProfileBox/>
-                    <ProfileBox/>
+                    <ProfileBox/> */}
                 </div>
             </div>
         )

@@ -71,7 +71,7 @@ contextBridge.exposeInMainWorld(
             });
         },
         login: (channel, param) => {
-            console.log(param);
+            // console.log(param);
             axios.post(`http://localhost:54000/auth/local`, {id: param.id, pwd: param.pwd}, { withCredentials : true }).then(res => {
                 // console.log('login:', res.data);
                 if (param.callback) param.callback(res.data);
