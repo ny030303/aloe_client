@@ -27,23 +27,12 @@ export default class MainPage extends React.Component {
   }
 
   componentDidMount() {
-    // eventService.listenEvent("openChatting", (userName) => {
-    //   if(!this.state.isOpenChatting) {this.w = 900; this.h = 600;}
-    //   else {this.w = 400; this.h = 600;}
-    //   // this.openChattingRoom();
-    // });
   }
 
   componentWillMount() {
     window.main.resize("toMain", {width: this.w, height: this.h, callback: (result) => {} });
     
   }
-
-  // openChattingRoom = () => {
-  //   window.main.resize("toMain", { width: this.w, height: this.h, callback: (result) => {
-  //     this.setState({ isOpenChatting: !this.state.isOpenChatting });
-  //    }});
-  // }
 
   changeMenuNum = (e) => this.setState({ menuNum: e.target.dataset.num });
 
