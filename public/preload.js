@@ -106,5 +106,15 @@ contextBridge.exposeInMainWorld(
         //         if (param.callback) param.callback(res.data);
         //     });
         // }
+        addGroup: () => {
+            let asdf = {
+                "title": "",
+                "users": [{
+                    "_id": "607d2318949c4eaba611c046",
+                    "name": "111"
+                }],
+                "contents": [{ "name": "111", "content": "test" }]
+            };
+        }
     }
 );
