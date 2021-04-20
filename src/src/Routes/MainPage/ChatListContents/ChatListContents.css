@@ -16,8 +16,8 @@
 
 .chat-groupbox {
     border-bottom: 2px solid #323b44;
-    padding: 1.8em 0 4em 1em;
-    background-color: #1fab89;
+    padding: 1.8em 0 1.8em 1em;
+    background-color: #3ba58b;
     color: #fff;
     position: relative;
     cursor: pointer;

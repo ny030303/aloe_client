@@ -1,5 +1,7 @@
 import * as React from 'react';
+import $ from "jquery";
 import "./AddGroupPopup.css";
+import { socket } from '../../services/SocketService';
 
 export default class AddGroupPopup extends React.Component {
 
@@ -10,20 +12,43 @@ export default class AddGroupPopup extends React.Component {
         };
     }
 
-    titleEvent = (e) => { this.setState({ title: e.target.value.trim() });}
+    componentDidMount() {
+        let {hidePopup} = this.props;
+        $('#addgroupPopup').modal();
+        $('#addgroupPopup').on('hidden.bs.modal', function (e) {  setTimeout(() => {hidePopup()}, 100); });
+    }
 
+    titleEvent = (e) => { this.setState({ title: e.target.value.trim() });}
     
+
+    editEvent = () => {
+        let {hidePopup} = this.props;
+        socket.emit('addGroup', this.state.title);
+        socket.on('addGroup-ok', (res) => {
+            if(res) {
+                $('#addgroupPopup').modal('hide');
+                setTimeout(() => {hidePopup()}, 100);
+            }
+        });
+    };
 
     render() {
         return (
-            <div className="addgroup-popup">
-               <div className="addgroup-popup-body">
-                <h3>Add Group form</h3>
-                <div className="addgroup-popup-form">
-                    <input className="uk-input" type="text" placeholder="그룹 이름 작성" onChange={this.titleEvent} onInput={this.titleEvent} />
-                    <button className="uk-button uk-button-primary " style={{"backgroundColor": "#1fab89"}} onClick={this.loginEvent}>등록</button>
+            <div className="addgroup-popup modal fade" id="addgroupPopup">
+                <div className="modal-dialog">
+                    <div className="modal-content" style={{padding: '34px'}}>
+                        <h3>Add Group form</h3>
+                        <div className="addgroup-popup-form">
+                            <input className="uk-input" type="text" placeholder="그룹 이름 작성" onChange={this.titleEvent} onInput={this.titleEvent} />
+                            <button className="uk-button uk-button-primary " style={{"backgroundColor": "#1fab89"}} onClick={this.editEvent}>등록</button> 
+                            {/* data-dismiss="modal" */}
+                        </div>
+                    </div>
                 </div>
-               </div>
+               
+               {/* <div className="addgroup-popup-body">
+                
+               </div> */}
             </div>
         )
     }

@@ -1,0 +1,35 @@
+
+
+.chatting-start-title {
+    text-align: center;
+    font-size: 35px;
+    margin: 100px 0 0 0;
+}
+
+.chatting-start-boxbtn-wrap {
+    display: flex;
+    justify-content: space-around;
+    width: 750px;
+    margin: 0 auto;
+}
+
+.chatting-start-boxbtn-wrap > * {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.chatting-start-boxbtn-wrap .uk-card-body {
+    min-width: 250px;
+    height: 208px;
+    text-align: center;
+}
+
+.chatting-start-subtitle {
+    text-align: center;
+    font-size: 13px;
+    margin: 5px 0 44px 0;
+}
+
+.chatting-start-boxbtn-wrap .uk-card-title {
+    margin: 0;
+}

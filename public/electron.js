@@ -3,6 +3,12 @@ const isDev = require('electron-is-dev');
 const path = require('path');
 let mainWindow;
 
+const axios = require('axios');
+axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.headers.get['Content-Type'] ='application/json;charset=utf-8';
+axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 450,
@@ -33,8 +39,11 @@ function createWindow() {
     // 프로덕션 환경에서는 패키지 내부 리소스에 접근    
     mainWindow.loadFile('./public/index.html');
   }
-  mainWindow.on('closed', function () {    
-    mainWindow = null;
+  mainWindow.on('closed', function () {
+    axios.get(`http://localhost:54000/auth/logout`, { withCredentials : true }).then(res => {
+        console.log('logout:', res.data);
+        mainWindow = null;
+    });
   });
 
   mainWindow.once('ready-to-show', () => {

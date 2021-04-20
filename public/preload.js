@@ -106,15 +106,12 @@ contextBridge.exposeInMainWorld(
         //         if (param.callback) param.callback(res.data);
         //     });
         // }
-        addGroup: () => {
-            let asdf = {
-                "title": "",
-                "users": [{
-                    "_id": "607d2318949c4eaba611c046",
-                    "name": "111"
-                }],
-                "contents": [{ "name": "111", "content": "test" }]
-            };
+        addGroup: (channel, param) => {
+            console.log(param);
+            axios.post('http://localhost:54000/group/addgroup', param.title).then(res => {
+                // console.log('fileUpload:', res.data);
+                if (param.callback) param.callback(res.data);
+            });
         }
     }
 );
