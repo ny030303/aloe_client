@@ -1,5 +1,5 @@
 .chat-list-contents {
-    width: 520px;
+    min-width: 340px;
     height: 100%;
     display: inline-block;
     background-color: #363e47;

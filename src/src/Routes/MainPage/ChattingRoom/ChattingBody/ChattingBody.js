@@ -12,6 +12,9 @@ export default class ChattingBody extends React.Component {
         return (
             <div className="chatting-body">
                 <div id="chat">
+                    <div className="chat-header">
+                        
+                    </div>
                     <div id="msgBox">
                         <div className="you">
                             <div className="entete">
@@ -36,6 +39,7 @@ export default class ChattingBody extends React.Component {
                         <button id="btnSend">ENTER</button>
                     </div>
                 </div>
+                <div className="group-info"></div>
             </div>
         )
     }

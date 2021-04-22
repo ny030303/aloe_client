@@ -1,5 +1,6 @@
 import axios from "axios";
 
+export const clientMode = "web"; // or electron
 
 // export const login = (uid, pwd, callback) => {
 //     fetch(`/php/login.php?id=${uid}&pwd=${pwd}`).then(data => data.json()).then(res => {

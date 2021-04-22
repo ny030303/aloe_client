@@ -1,7 +1,7 @@
 import * as React from 'react';
 import "./SignupPage.css";
 import alertDialog from '../../services/AlertDialog/AlertDialog';
-import { putUser } from '../../services/DataService';
+import { clientMode, putUser } from '../../services/DataService';
 import { fileToDataURL } from '../../services/CommonUtils';
 export default class SignupPage extends React.Component {
 
@@ -21,36 +21,52 @@ export default class SignupPage extends React.Component {
     this.myImg = React.createRef();
   }
 
-  gotoBack = () => {
-    window.main.resize("toMain", { width: 450, height: 560, callback: (result) => console.log('요청 후 결과 값 : ', result) });
-    this.props.history.push("/");
+  componentDidMount() {
+    switch(clientMode) {
+      case "web":
+        
+        break;
+      case "electron":
+        window.main.resize("toMain", {width:450, height:750, callback :(result)=> {}});
+        break;
+    }
+    
   }
+
+  gotoBack = () => { this.props.history.push("/"); }
 
   signup = async () => {
     const { state } = this;
     let imgData = await fileToDataURL(this.myImg.current.files[0]);
     // console.log({ "img": imgData});
-
-    await window.db.fileUpload("signupPage", {"img": imgData,
-      callback: (fRes) => {
-        this.setState({profileURL: fRes.fileName});
-        let userData = {
-          id: state.id,
-          pwd: state.pwd,
-          name: state.name,
-          profileURL: this.state.profileURL,
-          memo: ''
-        };
-        window.db.signup("signupPage", {userData, 
-          callback: (sRes) => {
-            if (Number(sRes.result) == 1) {
-              alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
-              this.gotoBack();
-            }
+    switch(clientMode) {
+      case "web":
+        
+        break;
+      case "electron":
+        await window.db.fileUpload("signupPage", {"img": imgData,
+          callback: (fRes) => {
+            this.setState({profileURL: fRes.fileName});
+            let userData = {
+              id: state.id,
+              pwd: state.pwd,
+              name: state.name,
+              profileURL: this.state.profileURL,
+              memo: ''
+            };
+            window.db.signup("signupPage", {userData, 
+              callback: (sRes) => {
+                if (Number(sRes.result) == 1) {
+                  alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
+                  this.gotoBack();
+                }
+              }
+            });
           }
         });
-      }
-    });
+        break;
+    }
+    
   }
 
   idEvent = (e) => { this.setState({ id: e.target.value.trim() }); }

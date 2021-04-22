@@ -1,6 +1,9 @@
-
+#alertModal {
+    -webkit-app-region: no-drag;
+}
 .modal-dialog {
     width: 600px;
+    
 }
 .modal-footer {
     padding: .25rem;

@@ -11,30 +11,6 @@ axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
-contextBridge.exposeInMainWorld(
-    "api", {
-        send: (channel, data) => {
-            // const {remote} = require("electron");
-            // whitelist channels
-            // let validChannels = ["toMain"];
-            // if (validChannels.includes(channel)) {
-            //     ipcRenderer.send(channel, data);
-            // }
-
-            console.log(remote);
-            // remote.getCurrentWindow().close();
-            console.log(channel, data);//html에서 넘기는 값, channel로 구분하면 됩니다.
-            data.callback({ result: '성공' });
-        },
-        receive: (channel, func) => {
-            let validChannels = ["fromMain"];
-            if (validChannels.includes(channel)) {
-                // Deliberately strip event as it includes `sender` 
-                ipcRenderer.on(channel, (event, ...args) => func(...args));
-            }
-        }
-    }
-);
 
 contextBridge.exposeInMainWorld(
     "main", {
@@ -106,12 +82,5 @@ contextBridge.exposeInMainWorld(
         //         if (param.callback) param.callback(res.data);
         //     });
         // }
-        addGroup: (channel, param) => {
-            console.log(param);
-            axios.post('http://localhost:54000/group/addgroup', param.title).then(res => {
-                // console.log('fileUpload:', res.data);
-                if (param.callback) param.callback(res.data);
-            });
-        }
     }
 );

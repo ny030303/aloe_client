@@ -21,7 +21,7 @@
 }
 
 #inputBox {
-    height: 50px;
+    height: 40px;
     display: flex;
     width: 100%;
     position: absolute;
@@ -47,4 +47,12 @@
 
 #btnSend:hover {
     background-color: #29b593;
+}
+
+.chat-header {
+    
+}
+
+.chatting-body .group-info {
+
 }

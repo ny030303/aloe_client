@@ -7,6 +7,7 @@ import MainHeader from './MainHeader/MainHeader';
 import eventService from '../../services/EventService';
 import ChattingRoom from './ChattingRoom/ChattingRoom';
 import { socket } from '../../services/SocketService';
+import { clientMode } from '../../services/DataService';
 
 
 
@@ -18,7 +19,7 @@ export default class MainPage extends React.Component {
       menuNum: 0,
       userData: null
     };
-    this.w = 1250;
+    this.w = 1525;
     this.h = 750;
     
     socket.on('login-ok', params => {
@@ -30,8 +31,14 @@ export default class MainPage extends React.Component {
   }
 
   componentWillMount() {
-    window.main.resize("toMain", {width: this.w, height: this.h, callback: (result) => {} });
-    
+    switch(clientMode) {
+      case "web":
+        
+        break;
+      case "electron":
+        window.main.resize("toMain", {width: this.w, height: this.h, callback: (result) => {} });
+        break;
+    }
   }
 
   changeMenuNum = (e) => this.setState({ menuNum: e.target.dataset.num });

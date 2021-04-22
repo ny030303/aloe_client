@@ -8,6 +8,7 @@ import SignupPage from './Routes/SignupPage/SignupPage';
 import MyFrame from './MyFrame/MyFrame';
 // import posed, { PoseGroup } from 'react-pose';
 import {socket} from './services/SocketService';
+import { clientMode } from './services/DataService';
 
 const PrivateRoute = ({component: Component, authed, ...rest}) => (
   <Route
@@ -37,10 +38,18 @@ class App extends React.Component {
       authed: false
     };
     
-    window.db.checkIsLogin("App", {callback: (res) => {
-      this.setState({authed: res.result ? true : false});
-      socket.emit('login-check', res.result);
-    }});
+    switch(clientMode) {
+      case "web":
+        
+        break;
+      case "electron":
+        window.db.checkIsLogin("App", {callback: (res) => {
+          this.setState({authed: res.result ? true : false});
+          socket.emit('login-check', res.result);
+        }});
+        break;
+    }
+   
 
     eventService.listenEvent('loginStatus', data => {
       this.setState({authed: data.authed});
@@ -53,7 +62,7 @@ class App extends React.Component {
         
         <HashRouter>
           {/* {this.state.isPanorama ? null :  (<MyNewsBox/>)} */}
-          <MyFrame/>
+          { clientMode == "electron" ? <MyFrame/> : <></> }
           <Switch>
             <PrivateRoute exact authed={this.state.authed} path="/" component={MainPage}/>
             <LoginRoute exact authed={this.state.authed} path="/login" component={LoginPage}/>
