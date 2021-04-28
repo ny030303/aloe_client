@@ -3,7 +3,7 @@ import "./MainHeader.css";
 import alertDialog from '../../../services/AlertDialog/AlertDialog';
 import eventService from '../../../services/EventService';
 import { serverLink, socket } from '../../../services/SocketService';
-import { clientMode } from '../../../services/DataService';
+import { clientMode, serviceDB } from '../../../services/DataService';
 
 export default class MainHeader extends React.Component {
 
@@ -16,7 +16,7 @@ export default class MainHeader extends React.Component {
         socket.emit('logout');
         switch(clientMode) {
             case "web":
-              
+              serviceDB.logout("MainHeader", {callback: (res) => alertDialog.show("메시지", res.result)});
               break;
             case "electron":
                 window.db.logout("MainHeader", {callback: (res) => alertDialog.show("메시지", res.result)});

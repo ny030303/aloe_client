@@ -8,7 +8,7 @@ import SignupPage from './Routes/SignupPage/SignupPage';
 import MyFrame from './MyFrame/MyFrame';
 // import posed, { PoseGroup } from 'react-pose';
 import {socket} from './services/SocketService';
-import { clientMode } from './services/DataService';
+import { clientMode, serviceDB} from './services/DataService';
 
 const PrivateRoute = ({component: Component, authed, ...rest}) => (
   <Route
@@ -40,12 +40,20 @@ class App extends React.Component {
     
     switch(clientMode) {
       case "web":
-        
+        serviceDB.checkIsLogin("App", {callback: (res) => {
+          this.setState({authed: res.result ? true : false});
+          if(res.result) {
+            socket.emit('login', res.result);
+          }
+          
+        }});
         break;
       case "electron":
         window.db.checkIsLogin("App", {callback: (res) => {
           this.setState({authed: res.result ? true : false});
-          socket.emit('login-check', res.result);
+          if(res.result) {
+            socket.emit('login', res.result);
+          }
         }});
         break;
     }

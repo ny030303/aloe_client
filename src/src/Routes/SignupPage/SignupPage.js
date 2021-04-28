@@ -1,7 +1,7 @@
 import * as React from 'react';
 import "./SignupPage.css";
 import alertDialog from '../../services/AlertDialog/AlertDialog';
-import { clientMode, putUser } from '../../services/DataService';
+import { clientMode, putUser, serviceDB } from '../../services/DataService';
 import { fileToDataURL } from '../../services/CommonUtils';
 export default class SignupPage extends React.Component {
 
@@ -41,7 +41,26 @@ export default class SignupPage extends React.Component {
     // console.log({ "img": imgData});
     switch(clientMode) {
       case "web":
-        
+        await serviceDB.fileUpload("signupPage", {"img": imgData,
+          callback: (fRes) => {
+            this.setState({profileURL: fRes.fileName});
+            let userData = {
+              id: state.id,
+              pwd: state.pwd,
+              name: state.name,
+              profileURL: this.state.profileURL,
+              memo: ''
+            };
+            serviceDB.signup("signupPage", {userData, 
+              callback: (sRes) => {
+                if (Number(sRes.result) == 1) {
+                  alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
+                  this.gotoBack();
+                }
+              }
+            });
+          }
+        });
         break;
       case "electron":
         await window.db.fileUpload("signupPage", {"img": imgData,
