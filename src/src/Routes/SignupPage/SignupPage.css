@@ -1,6 +1,8 @@
 .signup-page {
     position: relative;
     margin: 1em 0 0 0;
+    width: 30rem;
+    margin: 30px auto 25px auto;
 }
 
 .signup-header {

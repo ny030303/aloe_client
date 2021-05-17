@@ -13,7 +13,7 @@ export default class ChattingBody extends React.Component {
             <div className="chatting-body">
                 <div id="chat">
                     <div className="chat-header">
-                        
+                        Text
                     </div>
                     <div id="msgBox">
                         <div className="you">
@@ -39,7 +39,17 @@ export default class ChattingBody extends React.Component {
                         <button id="btnSend">ENTER</button>
                     </div>
                 </div>
-                <div className="group-info"></div>
+                <div className="group-info">
+                    <h4>Clients</h4>
+                    <div className="group-user">
+                        <div className="u-img"></div>
+                        <div className="green-dot"></div>
+                    </div>
+                    
+                    <div className="group-user-add">
+                        <i className="fas fa-plus"/>
+                    </div>
+                </div>
             </div>
         )
     }
