@@ -59,7 +59,7 @@ export default class MainPage extends React.Component {
           }
           {/* --- chatting --- */}
 
-          <ChattingRoom/>
+          <ChattingRoom userData={this.state.userData}/>
         </div>
       </div>
     );

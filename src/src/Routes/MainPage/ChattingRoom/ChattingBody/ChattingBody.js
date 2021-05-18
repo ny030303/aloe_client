@@ -1,42 +1,55 @@
 import * as React from 'react';
 import "./ChattingBody.css";
 import "./chatbox.css";
+import { socket } from '../../../../services/SocketService';
 
 export default class ChattingBody extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
+        this.state = {
+            message: ""
+        }
+    }
+
+    componentDidMount() {
+        
+    }
+
+    messageEvent = (e) => { this.setState({ message: e.target.value.trim() }); }
+
+    sendMessage = () => {
+        console.log("send?");
+        socket.emit("write-message", {_id: this.props.group_info._id, message: this.state.message});
     }
 
     render() {
+        let {userData, group_info} = this.props;
         return (
             <div className="chatting-body">
                 <div id="chat">
                     <div className="chat-header">
-                        Text
+                        {group_info.title}
                     </div>
                     <div id="msgBox">
-                        <div className="you">
-                            <div className="entete">
-                                <h2>name</h2>
-                                <span className="green"></span>
-                                <h3  className="date">2010-03-04 00:00:00</h3>
-                            </div>
-                        
-                            <div className="message">msg</div>
-                        </div>
-                        <div className="me">
-                            <div className="entete">
-                                <h2>name</h2>
-                                <span className="blue"></span>
-                                <h3  className="date">2010-03-04 00:00:00</h3>
-                            </div>
-                            <div className="message">msg</div>
-                        </div>
+                        {
+                            group_info.contents.map((el,i) => (
+                                <div className={userData._id == el.user_id ? "me" : "you"}>
+                                    <div className="entete">
+                                        <h2>{el.name}</h2>
+                                        <span className={userData._id == el.user_id ? "blue" : "green"}></span>
+                                        <h3  className="date">{el.created}</h3>
+                                    </div>
+                                
+                                    <div className="message">{el.message}</div>
+                                </div>
+                            ))
+                        }
                     </div> 
                     <div id="inputBox">
-                        <input type="text" id="msg" autoComplete="off"/>
-                        <button id="btnSend">ENTER</button>
+                        <input type="text" id="msg" autoComplete="off" onChange={this.messageEvent} onInput={this.messageEvent} />
+                        <button id="btnSend" onClick={this.sendMessage}>ENTER</button>
                     </div>
                 </div>
                 <div className="group-info">

@@ -1,12 +1,17 @@
 import * as React from 'react';
 import "./ChatlistGroupbox.css";
 import eventService from '../../../../services/EventService';
+import { socket } from '../../../../services/SocketService';
 
 export default class ChatlistGroupbox extends React.Component {
 
     constructor(props) {
         super(props);
 
+    }
+
+    componentDidMount() {
+        
     }
     
     openGroupChattingRoom = () => {

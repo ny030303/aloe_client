@@ -1,7 +1,7 @@
 
 .chatlist-groupbox {
     border-bottom: 2px solid #323b44;
-    padding: 1.8em 0 1.8em 1em;
+    padding: 1.4em 0 1.5em 1em;
     background-color: #3ba58b;
     color: #fff;
     position: relative;
@@ -34,7 +34,7 @@
 
 
 .chatlist-groupbox-title {
-    font-size: 18px;
+    font-size: 16px;
     text-overflow:ellipsis; 
     white-space:nowrap;
 }

@@ -11,7 +11,7 @@ export default class ChattingRoom extends React.Component {
         super(props);
         this.state = {
             nowShowPopupNum: -1,   // 1= meet people, 2= add group, 3= search, -1=none
-            group_id: null
+            group_info: null
         };
        
     }
@@ -19,8 +19,24 @@ export default class ChattingRoom extends React.Component {
     componentDidMount() {
         eventService.listenEvent("openChattingRoom", (params) => {
             console.log(params);
-            this.setState({group_id: params._id});
-        });        
+            socket.emit("show-a-group", params._id);
+        });
+        // group 정보 가져오기
+        socket.on("show-a-group-ok", (info) => {
+            console.log(info);
+            this.setState({group_info: info});
+        });
+
+        socket.on("new-message", (params) => {
+            console.log("new-message in");
+            if(params._id == this.state.group_info._id) {
+                let newContentsArr = [...this.state.group_info.contents, params.message];
+                let temp = Object.assign({}, this.state.group_info);
+                temp.contents = newContentsArr;
+                this.setState({group_info: temp});
+                console.log(temp);
+            }
+        });
     }
 
     addGroupEvent = () => this.setState({nowShowPopupNum: 2});
@@ -30,8 +46,8 @@ export default class ChattingRoom extends React.Component {
         return (
             <div className="chatting-room">
                 {
-                    this.state.group_id == null ? 
-                    <ChattingStart/> : <ChattingBody/>
+                    this.state.group_info == null ? 
+                    <ChattingStart/> : <ChattingBody group_info={this.state.group_info} userData={this.props.userData}/>
                 }
             </div>
         )

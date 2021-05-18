@@ -23,8 +23,8 @@ export default class AddGroupPopup extends React.Component {
 
     editEvent = () => {
         let {hidePopup} = this.props;
-        socket.emit('addGroup', this.state.title);
-        socket.on('addGroup-ok', (res) => {
+        socket.emit('add-group', this.state.title);
+        socket.on('add-group-ok', (res) => {
             if(res) {
                 $('#addgroupPopup').modal('hide');
                 setTimeout(() => {hidePopup()}, 100);
