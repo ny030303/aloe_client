@@ -1,6 +1,5 @@
 import * as React from 'react';
 import "./MainPage.css";
-import alertDialog from '../../services/AlertDialog/AlertDialog';
 import ChatListContents from './ChatListContents/ChatListContents';
 import UserListContents from './UserListContents/UserListContents';
 import MainHeader from './MainHeader/MainHeader';

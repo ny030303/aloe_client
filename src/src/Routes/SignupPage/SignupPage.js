@@ -1,8 +1,8 @@
 import * as React from 'react';
 import "./SignupPage.css";
-import alertDialog from '../../services/AlertDialog/AlertDialog';
 import { clientMode, putUser, serviceDB } from '../../services/DataService';
 import { fileToDataURL } from '../../services/CommonUtils';
+import Swal from 'sweetalert2';
 export default class SignupPage extends React.Component {
 
   constructor(props) {
@@ -54,7 +54,7 @@ export default class SignupPage extends React.Component {
             serviceDB.signup("signupPage", {userData, 
               callback: (sRes) => {
                 if (Number(sRes.result) == 1) {
-                  alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
+                  Swal.fire("메시지", "정상적으로 회원가입 됐습니다.", "success");
                   this.gotoBack();
                 }
               }
@@ -76,7 +76,7 @@ export default class SignupPage extends React.Component {
             window.db.signup("signupPage", {userData, 
               callback: (sRes) => {
                 if (Number(sRes.result) == 1) {
-                  alertDialog.show("회원가입 성공!", "정상적으로 회원가입 됐습니다.");
+                  Swal.fire("메시지", "정상적으로 회원가입 됐습니다.", "success");
                   this.gotoBack();
                 }
               }

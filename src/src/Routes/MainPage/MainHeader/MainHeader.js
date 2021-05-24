@@ -1,9 +1,9 @@
 import * as React from 'react';
 import "./MainHeader.css";
-import alertDialog from '../../../services/AlertDialog/AlertDialog';
 import eventService from '../../../services/EventService';
 import { serverLink, socket } from '../../../services/SocketService';
 import { clientMode, serviceDB } from '../../../services/DataService';
+import Swal from 'sweetalert2';
 
 export default class MainHeader extends React.Component {
 
@@ -16,10 +16,10 @@ export default class MainHeader extends React.Component {
         socket.emit('logout');
         switch(clientMode) {
             case "web":
-              serviceDB.logout("MainHeader", {callback: (res) => alertDialog.show("메시지", res.result)});
+              serviceDB.logout("MainHeader", {callback: (res) => Swal.fire("메시지", res.result, "success")});
               break;
             case "electron":
-                window.db.logout("MainHeader", {callback: (res) => alertDialog.show("메시지", res.result)});
+                window.db.logout("MainHeader", {callback: (res) => Swal.fire("메시지", res.result, "success")});
               break;
           }
         
@@ -38,22 +38,14 @@ export default class MainHeader extends React.Component {
                             <div className="main-header-u-img" style={this.props.userData ? {backgroundImage: `url(${image})`} : {}}/>
                             <div className="green-dot" />
                         </div>
-                        <div className={((this.props.menuNum == 0) ? "on " : "") + "main-header-menu-box"}
-                            data-num="0" onClick={this.props.changeMenuNum}>
-                            <i className="fas fa-user" data-num="0" />
-                        </div>
-                        <div className={((this.props.menuNum == 1) ? "on " : "") + "main-header-menu-box"} 
-                            data-num="1" onClick={this.props.changeMenuNum}>
-                            <i className="fas fa-comment-dots" data-num="1" />
-                        </div>
-                        <div className={((this.props.menuNum == 2) ? "on " : "") + "main-header-menu-box"}
-                            data-num="2" onClick={this.props.changeMenuNum}>
-                            <i className="fas fa-user-plus" data-num="2" />
-                        </div>
-                        <div className={((this.props.menuNum == 3) ? "on " : "") + "main-header-menu-box"} 
-                            data-num="3" onClick={this.props.changeMenuNum}>
-                            <i className="fas fa-cog" data-num="3" />
-                        </div>
+                        {
+                            ["fa-user", "fa-comment-dots", "fa-user-plus", "fa-cog"].map((el,i) => (
+                                <div className={((this.props.menuNum == i) ? "on " : "") + "main-header-menu-box"} key={i}
+                                    data-num={i} onClick={this.props.changeMenuNum}>
+                                    <i className={"fas "+ el} data-num={i} />
+                                </div>
+                            ))
+                        }
                     </div>
                     <div className="main-menu-bottom">
                         <i className="fas fa-bell" />

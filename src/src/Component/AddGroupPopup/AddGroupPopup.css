@@ -21,6 +21,7 @@
 .addgroup-popup-form {
     display: flex;
     justify-content: space-around;
+    margin: 30px 0px 5px 0;
 }
 
 .addgroup-popup-form > * {

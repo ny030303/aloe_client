@@ -1,7 +1,7 @@
 import * as React from 'react';
 import "./LoginPage.css";
 import svg from '../../assets/chat.svg';
-import alertDialog from '../../services/AlertDialog/AlertDialog';
+import Swal from 'sweetalert2';
 import eventService from '../../services/EventService';
 import { socket } from '../../services/SocketService';
 import { clientMode, serviceDB } from '../../services/DataService';
@@ -40,11 +40,13 @@ export default class LoginPage extends React.Component {
             callback: (res) => {
               // console.log(res);
               if (res.result.id) {
-                alertDialog.show("메시지", "로그인 성공");
+                // alertDialog.show("메시지", "로그인 성공");
+                Swal.fire("메시지", "로그인 성공", "success");
                 eventService.emitEvent('loginStatus', { authed: true, userData: res.result });
                 socket.emit('login', res.result);
               } else {
-                alertDialog.show("로그인 실패", res.result);
+                // alertDialog.show("로그인 실패", res.result);
+                Swal.fire("로그인 실패", res.result, "error");
               }
             }
           });
@@ -55,11 +57,13 @@ export default class LoginPage extends React.Component {
             callback: (res) => {
               // console.log(res);
               if (res.result.id) {
-                alertDialog.show("메시지", "로그인 성공");
+                // alertDialog.show("메시지", "로그인 성공");
+                Swal.fire("메시지", "로그인 성공", "success");
                 eventService.emitEvent('loginStatus', { authed: true, userData: res.result });
                 socket.emit('login', res.result);
               } else {
-                alertDialog.show("로그인 실패", res.result);
+                // alertDialog.show("로그인 실패", res.result);
+                Swal.fire("메시지", "로그인 실패", "error");
               }
             }
           });
@@ -67,7 +71,7 @@ export default class LoginPage extends React.Component {
       }
 
     } else {
-      alertDialog.show("로그인 실패", "값이 빈 부분이 있습니다.");
+      Swal.fire("메시지", "값이 빈 부분이 있습니다.", "info");
     }
 
   };

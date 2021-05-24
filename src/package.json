@@ -19,6 +19,7 @@
     "react-slick": "^0.25.2",
     "socket.io-client": "^4.0.1",
     "styled-components": "^5.0.1",
+    "sweetalert2": "^11.0.11",
     "uikit": "^3.2.7",
     "web-vitals": "^1.1.0"
   },
