@@ -2,7 +2,7 @@ import * as React from 'react';
 import "./ChattingBody.css";
 import "./chatbox.css";
 import Swal from 'sweetalert2';
-import { serverLink, socket } from '../../../../services/SocketService';
+import { serverLink, socket, clientLink } from '../../../../services/SocketService';
 
 export default class ChattingBody extends React.Component {
 
@@ -45,10 +45,15 @@ export default class ChattingBody extends React.Component {
         Swal.fire({
             icon: 'info',
             title: 'Group 초대하기',
+            showCancelButton: true,
+            confirmButtonText: `Copy`,
             text: '링크를 통해 그룹에 초대해 보세요!',
-            footer: `<input class="form-control" value="${serverLink}group/adduser/${this.props.group_info._id}" ReadOnly/> <button class="btn btn-secondary">Copy</button>`
+            html: `<input class="form-control" value="${clientLink}invite/${this.props.group_info._id}" id="links" ReadOnly/>`
           }).then((result) => {
-            console.log(result);
+            if(result.isConfirmed) {
+                document.querySelector("#links").select();
+                document.execCommand("Copy");
+            }
           });
         //   copyText.select();
         // document.execCommand("Copy");

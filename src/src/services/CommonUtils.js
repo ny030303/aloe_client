@@ -31,3 +31,4 @@ export const fileToDataURL = async (inputfile) => {
     });
     return fileData;
 };
+

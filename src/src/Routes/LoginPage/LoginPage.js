@@ -16,6 +16,9 @@ export default class LoginPage extends React.Component {
 
   }
   componentDidMount() {
+    eventService.listenEvent("showGuide", () => {
+      Swal.fire("Group 초대 안내", "로그인 후 group에 참석 할 수 있습니다. 로그인 후 해당 링크를 열어주세요.", "warning");
+    });
     switch (clientMode) {
       case "web":
 

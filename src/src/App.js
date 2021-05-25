@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {HashRouter, Redirect, Route, Switch} from 'react-router-dom';
+import {HashRouter,BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import MainPage from "./Routes/MainPage/MainPage";
 import eventService from "./services/EventService";
 import LoginPage from './Routes/LoginPage/LoginPage';
@@ -9,6 +9,7 @@ import MyFrame from './MyFrame/MyFrame';
 // import posed, { PoseGroup } from 'react-pose';
 import {socket} from './services/SocketService';
 import { clientMode, serviceDB} from './services/DataService';
+import InvitePage from './Routes/InvitePage/InvitePage';
 
 const PrivateRoute = ({component: Component, authed, ...rest}) => (
   <Route
@@ -68,19 +69,16 @@ class App extends React.Component {
     return (
       <div className="App">
         
-        <HashRouter>
-          {/* {this.state.isPanorama ? null :  (<MyNewsBox/>)} */}
+        <BrowserRouter>
           { clientMode == "electron" ? <MyFrame/> : <></> }
           <Switch>
             <PrivateRoute exact authed={this.state.authed} path="/" component={MainPage}/>
             <LoginRoute exact authed={this.state.authed} path="/login" component={LoginPage}/>
-            {/* <Route exact path="/login" component={LoginPage}/> */}
             <Route exact path="/signup" component={SignupPage}/>
-            {/* <Route exact path="/" component={MainPage}/> */}
             
+            <Route exact path="/invite/:g_id" render={() => <InvitePage authed={this.state.authed}/>}/>
           </Switch>
-          {/* {this.state.isPanorama ? null :  (<MyFooter/>)} */}
-        </HashRouter>
+        </BrowserRouter>
       </div>
     );
   }
