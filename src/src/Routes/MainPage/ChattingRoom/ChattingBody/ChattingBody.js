@@ -48,7 +48,7 @@ export default class ChattingBody extends React.Component {
             showCancelButton: true,
             confirmButtonText: `Copy`,
             text: '링크를 통해 그룹에 초대해 보세요!',
-            html: `<input class="form-control" value="${clientLink}invite/${this.props.group_info._id}" id="links" ReadOnly/>`
+            html: `<input class="form-control" value="${clientLink}invite/${this.props.group_info._id}/${this.props.userData._id}" id="links" ReadOnly/>`
           }).then((result) => {
             if(result.isConfirmed) {
                 document.querySelector("#links").select();

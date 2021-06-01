@@ -1,0 +1,53 @@
+.invite-page {
+    width: 100%;
+    height: 100%;
+    background: url("../../assets/back/forest-5375005_1920.jpg");
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.invite-page::before{
+    content: "";
+    opacity: 0.3;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #000;
+}
+
+.invite-body {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 60%;
+    background-color: #051016;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+}
+
+.group-title {
+    text-align: center;
+    color: #dedede;
+    font-size: 1.3em;
+}
+
+.inv-svg {
+    width: 55%;
+    margin: 20px auto;
+}
+
+/* .u-img {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    border-radius: 50%;
+    position: absolute;
+    width: 2.9em;
+    height: 2.9em;
+    margin: 0 auto;
+    cursor: pointer;
+} */

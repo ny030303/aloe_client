@@ -8,26 +8,6 @@ axios.defaults.headers.get['Content-Type'] ='application/json;charset=utf-8';
 export const clientMode = "web"; // electron or web
 
 // const options = { headers: { 'Content-Type': 'multipart/form-data'}};
-export const serviceMain = {
-  send: (channel, data) => {
-    // remote.getCurrentWindow().close();
-    console.log(channel, data);
-    data.callback({ result: '성공' });
-  },
-  resize: (channel, data) => {
-      // remote.getCurrentWindow().setContentSize(data.width, data.height);
-      data.callback({ result: '성공' });
-  },
-  toast: (channel, data) => {
-      // const notification = {
-      //     title: 'Basic Notification',
-      //     body: 'Notification from the Main process'
-      //   }
-      //   new Notification(notification).show();
-      // tray
-  }
-};
-
 export const serviceDB = {
   checkIsLogin:(channel, param) => {
       // console.log(param);
@@ -65,11 +45,10 @@ export const serviceDB = {
           if (param.callback) param.callback(res.data);
       });
   },
-  // getFileURL: (channel, param) => {
-  //     console.log(param);
-  //     axios.get('http://localhost:54000/images/'+ param.fileName).then(res => {
-  //         console.log('getFileURL:', res.data);
-  //         if (param.callback) param.callback(res.data);
-  //     });
-  // }
+  getAGroup: (channel, param) => {
+    // console.log(param);
+    axios.get(`${serverLink}group/${param.g_id}`).then(res => {
+        if (param.callback) param.callback(res.data);
+    });
+},
 };

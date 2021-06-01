@@ -38,7 +38,6 @@ class App extends React.Component {
     this.state = {
       authed: false
     };
-    
     switch(clientMode) {
       case "web":
         serviceDB.checkIsLogin("App", {callback: (res) => {
@@ -58,8 +57,6 @@ class App extends React.Component {
         }});
         break;
     }
-   
-
     eventService.listenEvent('loginStatus', data => {
       this.setState({authed: data.authed});
     });
@@ -76,7 +73,7 @@ class App extends React.Component {
             <LoginRoute exact authed={this.state.authed} path="/login" component={LoginPage}/>
             <Route exact path="/signup" component={SignupPage}/>
             
-            <Route exact path="/invite/:g_id" render={() => <InvitePage authed={this.state.authed}/>}/>
+            <Route exact path="/invite/:g_id/:u_id" render={() => <InvitePage authed={this.state.authed}/>}/>
           </Switch>
         </BrowserRouter>
       </div>

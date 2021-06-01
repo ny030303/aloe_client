@@ -16,9 +16,9 @@ export default class LoginPage extends React.Component {
 
   }
   componentDidMount() {
-    eventService.listenEvent("showGuide", () => {
-      Swal.fire("Group 초대 안내", "로그인 후 group에 참석 할 수 있습니다. 로그인 후 해당 링크를 열어주세요.", "warning");
-    });
+    // eventService.listenEvent("showGuide", () => {
+    //   Swal.fire("Group 초대 안내", "로그인 후 group에 참석 할 수 있습니다. 로그인 후 해당 링크를 열어주세요.", "warning");
+    // });
     switch (clientMode) {
       case "web":
 
@@ -43,12 +43,10 @@ export default class LoginPage extends React.Component {
             callback: (res) => {
               // console.log(res);
               if (res.result.id) {
-                // alertDialog.show("메시지", "로그인 성공");
                 Swal.fire("메시지", "로그인 성공", "success");
                 eventService.emitEvent('loginStatus', { authed: true, userData: res.result });
                 socket.emit('login', res.result);
               } else {
-                // alertDialog.show("로그인 실패", res.result);
                 Swal.fire("로그인 실패", res.result, "error");
               }
             }
@@ -60,12 +58,10 @@ export default class LoginPage extends React.Component {
             callback: (res) => {
               // console.log(res);
               if (res.result.id) {
-                // alertDialog.show("메시지", "로그인 성공");
                 Swal.fire("메시지", "로그인 성공", "success");
                 eventService.emitEvent('loginStatus', { authed: true, userData: res.result });
                 socket.emit('login', res.result);
               } else {
-                // alertDialog.show("로그인 실패", res.result);
                 Swal.fire("메시지", "로그인 실패", "error");
               }
             }
