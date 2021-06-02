@@ -25,10 +25,12 @@ export default class ChattingRoom extends React.Component {
         socket.on("show-a-group-ok", (info) => {
             console.log(info);
             this.setState({group_info: info});
+            
         });
 
         socket.on("new-message", (params) => {
             console.log("new-message in");
+            console.log(params);
             if(params._id == this.state.group_info._id) {
                 let newContentsArr = [...this.state.group_info.contents, params.message];
                 let temp = Object.assign({}, this.state.group_info);

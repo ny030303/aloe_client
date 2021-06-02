@@ -38,25 +38,31 @@ class App extends React.Component {
     this.state = {
       authed: false
     };
-    switch(clientMode) {
-      case "web":
-        serviceDB.checkIsLogin("App", {callback: (res) => {
-          this.setState({authed: res.result ? true : false});
-          if(res.result) {
-            socket.emit('login', res.result);
-          }
-          
-        }});
-        break;
-      case "electron":
-        window.db.checkIsLogin("App", {callback: (res) => {
-          this.setState({authed: res.result ? true : false});
-          if(res.result) {
-            socket.emit('login', res.result);
-          }
-        }});
-        break;
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userInfo);
+    if(userInfo == null) {
+      let dbController;
+      switch (clientMode) {
+        case "web": dbController = serviceDB;
+          break;
+        case "electron": dbController = window.db;
+          break;
+      }
+      dbController.checkIsLogin("App", {callback: (res) => {
+        this.setState({authed: res.result ? true : false});
+        if(res.result) {
+          localStorage.setItem("userInfo", JSON.stringify(res.result));
+          socket.emit('login', res.result);
+        }
+      }});
+    } else {
+        this.state.authed = userInfo != null;
+          // console.log(userInfo != null);
+          // console.log(this.state.authed);
+        socket.emit('login', userInfo);
     }
+    
+    
     eventService.listenEvent('loginStatus', data => {
       this.setState({authed: data.authed});
     });

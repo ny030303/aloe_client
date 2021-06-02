@@ -45,10 +45,16 @@ export const serviceDB = {
           if (param.callback) param.callback(res.data);
       });
   },
-  getAGroup: (channel, param) => {
+    getAGroup: (channel, param) => {
     // console.log(param);
-    axios.get(`${serverLink}group/${param.g_id}`).then(res => {
-        if (param.callback) param.callback(res.data);
-    });
-},
+        axios.get(`${serverLink}group/${param.g_id}`).then(res => {
+            if (param.callback) param.callback(res.data);
+        });
+    },
+    inviteUserToGroup: (channel, param) => {
+    // console.log(param);
+        axios.post(`${serverLink}group/invite`, param.data).then(res => {
+            if (param.callback) param.callback(res.data);
+        });
+    },
 };

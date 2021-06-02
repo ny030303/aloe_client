@@ -36,38 +36,28 @@ export default class LoginPage extends React.Component {
   
   loginEvent = () => {
     if (this.state.id != "" && this.state.pwd != "") {
+      let dbController;
       switch (clientMode) {
-        case "web":
-          serviceDB.login("LoginPage", {
-            id: this.state.id, pwd: this.state.pwd,
-            callback: (res) => {
-              // console.log(res);
-              if (res.result.id) {
-                Swal.fire("메시지", "로그인 성공", "success");
-                eventService.emitEvent('loginStatus', { authed: true, userData: res.result });
-                socket.emit('login', res.result);
-              } else {
-                Swal.fire("로그인 실패", res.result, "error");
-              }
-            }
-          });
+        case "web": dbController = serviceDB;
           break;
-        case "electron":
-          window.db.login("LoginPage", {
-            id: this.state.id, pwd: this.state.pwd,
-            callback: (res) => {
-              // console.log(res);
-              if (res.result.id) {
-                Swal.fire("메시지", "로그인 성공", "success");
-                eventService.emitEvent('loginStatus', { authed: true, userData: res.result });
-                socket.emit('login', res.result);
-              } else {
-                Swal.fire("메시지", "로그인 실패", "error");
-              }
-            }
-          });
+        case "electron": dbController = window.db;
           break;
       }
+      dbController.login("LoginPage", {
+        id: this.state.id, pwd: this.state.pwd,
+        callback: (res) => {
+          // console.log(res);
+          if (res.result.id) {
+            Swal.fire("메시지", "로그인 성공", "success");
+            localStorage.setItem("userInfo", JSON.stringify(res.result));
+            eventService.emitEvent('loginStatus', { authed: true, userData: res.result });
+            socket.emit('login', res.result);
+
+          } else {
+            Swal.fire("메시지", res.result, "error");
+          }
+        }
+      });
 
     } else {
       Swal.fire("메시지", "값이 빈 부분이 있습니다.", "info");
