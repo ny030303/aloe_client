@@ -21,12 +21,13 @@ export default class MainPage extends React.Component {
     this.w = 1525;
     this.h = 750;
     
-    socket.on('login-ok', params => {
-      this.setState({userData: params.user_data});
-    });
+    this.state.userData = JSON.parse(localStorage.getItem("userInfo"));
   }
 
   componentDidMount() {
+    socket.on('login-ok', params => {
+      this.setState({userData: params.user_data});
+    });
   }
 
   componentWillMount() {

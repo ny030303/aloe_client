@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import eventService from '../../services/EventService';
 import { socket } from '../../services/SocketService';
 import { clientMode, serviceDB } from '../../services/DataService';
+import { Toast } from '../../services/SweetToast';
 export default class LoginPage extends React.Component {
 
   constructor(props) {
@@ -43,16 +44,27 @@ export default class LoginPage extends React.Component {
         case "electron": dbController = window.db;
           break;
       }
-      dbController.login("LoginPage", {
-        id: this.state.id, pwd: this.state.pwd,
+      dbController.login("LoginPage", { id: this.state.id, pwd: this.state.pwd,
         callback: (res) => {
           // console.log(res);
           if (res.result.id) {
             Swal.fire("메시지", "로그인 성공", "success");
-            localStorage.setItem("userInfo", JSON.stringify(res.result));
-            eventService.emitEvent('loginStatus', { authed: true, userData: res.result });
-            socket.emit('login', res.result);
+            localStorage.setItem("userInfo", JSON.stringify(res.result)); ;// local 저장
+            eventService.emitEvent('loginStatus', { authed: true, userData: res.result }); // App에 authed, userData
+            socket.emit('login', res.result); // 소켓에 저장
 
+            let inviteInfo = JSON.parse(localStorage.getItem("inviteInfo"));
+            if(inviteInfo != null) { // local에 inviteInfo 정보 있으면
+              serviceDB.inviteUserToGroup("InvitePage", {data: {g_id: inviteInfo.g_id, u_id: res.result._id}, callback: (res) => {
+                if(res.result == 1) {
+                  Toast.fire({ icon: 'success', title: res.msg});
+                } else {
+                  Toast.fire({ icon: 'error', title: res.msg});
+                }
+                localStorage.removeItem("inviteInfo");
+                this.props.history.push("/");
+              }});
+            }
           } else {
             Swal.fire("메시지", res.result, "error");
           }

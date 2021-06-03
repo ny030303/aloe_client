@@ -14,14 +14,15 @@ export default class MainHeader extends React.Component {
 
     logoutEvent = () => {
         socket.emit('logout');
-        switch(clientMode) {
-            case "web":
-              serviceDB.logout("MainHeader", {callback: (res) => Swal.fire("메시지", res.result, "success")});
-              break;
-            case "electron":
-                window.db.logout("MainHeader", {callback: (res) => Swal.fire("메시지", res.result, "success")});
-              break;
-          }
+        let dbController;
+        switch (clientMode) {
+            case "web": dbController = serviceDB;
+            break;
+            case "electron": dbController = window.db;
+            break;
+        }
+        dbController.logout("MainHeader", {callback: (res) => Swal.fire("메시지", res.result, "success")});
+        localStorage.removeItem("userInfo");
         
         eventService.emitEvent('loginStatus', {authed: false, userData: null});
     }

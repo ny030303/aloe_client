@@ -55,6 +55,7 @@ class InvitePage extends React.Component {
         } else {
           Toast.fire({ icon: 'error', title: res.msg});
         }
+        localStorage.removeItem("inviteInfo");
         this.props.history.push("/");
       }});
     }
