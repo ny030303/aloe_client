@@ -40,7 +40,7 @@ export default class MainHeader extends React.Component {
                             <div className="green-dot" />
                         </div>
                         {
-                            ["fa-user", "fa-comment-dots", "fa-user-plus", "fa-cog"].map((el,i) => (
+                            ["fa-user", "fa-comment-dots", "fa-cog"].map((el,i) => (
                                 <div className={((this.props.menuNum == i) ? "on " : "") + "main-header-menu-box"} key={i}
                                     data-num={i} onClick={this.props.changeMenuNum}>
                                     <i className={"fas "+ el} data-num={i} />

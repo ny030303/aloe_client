@@ -113,3 +113,23 @@
     padding-top: 16px;
     color: #f1f4f4;
 }
+
+.click-user-img {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    border-radius: 50%;
+}
+
+.click-user-img + .title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.click-user-btn {
+    margin: 20px 103px;
+}

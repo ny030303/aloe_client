@@ -55,8 +55,30 @@ export default class ChattingBody extends React.Component {
                 document.execCommand("Copy");
             }
           });
-        //   copyText.select();
-        // document.execCommand("Copy");
+    }
+
+    showUserInfo = (el) => {
+        Swal.fire({
+            // imageUrl: `${serverLink}images/${el.profileURL}`,
+            // imageHeight: 300,
+            // imageAlt: 'A image'
+            html: ` <div class="card" style="height: 330px; padding: 20px; border: 0px;">
+                        <div class="click-user-img" style="background-image: url(${serverLink}images/${el.profileURL})"></div>
+                        <p class="title">${el.name}</p>
+                        <div>${this.props.group_info.title}</div>
+                    </div>
+                    `,
+            confirmButtonText: `Send Message`,
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        });
+                  
     }
 
     render() {
@@ -91,7 +113,7 @@ export default class ChattingBody extends React.Component {
                     <h4>Clients</h4>
                     {
                         group_info.users.map((el, i) => (
-                            <div className="group-user" key={i}>
+                            <div className="group-user" key={i} onClick={() => this.showUserInfo(el)}>
                                 <div className="u-img" style={{backgroundImage: `url(${serverLink}images/${el.profileURL})`}}/>
                                 <div className="green-dot"/>
                             </div>

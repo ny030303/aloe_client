@@ -28,10 +28,28 @@ export default class ChattingRoom extends React.Component {
             
         });
 
+        socket.on("new-user", (params) => {
+            console.log("new-user in");
+            console.log(params);
+            console.log(this.state.group_info);
+            if(this.state.group_info == null) {
+                // nothing
+            } else if(params._id == this.state.group_info._id) {
+                let newUsersArr = [...this.state.group_info.users, params.user];
+                let temp = Object.assign({}, this.state.group_info);
+                temp.users = newUsersArr;
+                this.setState({group_info: temp});
+                console.log(temp);
+            }
+        });
+
         socket.on("new-message", (params) => {
             console.log("new-message in");
             console.log(params);
-            if(params._id == this.state.group_info._id) {
+            console.log(this.state.group_info);
+            if(this.state.group_info == null) {
+                // nothing
+            } else if(params._id == this.state.group_info._id) {
                 // contents 업데이트
                 let newContentsArr = [...this.state.group_info.contents, params.message];
                 let temp = Object.assign({}, this.state.group_info);
