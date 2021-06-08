@@ -32,9 +32,12 @@ export default class ChattingRoom extends React.Component {
             console.log("new-message in");
             console.log(params);
             if(params._id == this.state.group_info._id) {
+                // contents 업데이트
                 let newContentsArr = [...this.state.group_info.contents, params.message];
                 let temp = Object.assign({}, this.state.group_info);
                 temp.contents = newContentsArr;
+                // 새로운 유저가 들어왔을 경우 그 유저 정보를 줘야 함.
+                // group_info.users.find(v => v._id == el.user_id)
                 this.setState({group_info: temp});
                 console.log(temp);
             }
