@@ -19,20 +19,27 @@
 
 #msgBox {
     width: 100%;
-    height: 90%;
+    /* height: 90%; */
     overflow-y:scroll;
     overflow-x: hidden;
     padding: 10px;
+    height: 790px;
 }
 
 #inputBox {
-    height: 40px;
-    display: flex;
+    height: 130px;
+    /* display: flex; */
     width: 100%;
     position: absolute;
-    left: 5px;
-    bottom: 5px;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(241 244 244);
+    box-shadow: -4px 0px 4px 0px #c3c3c3;
 }
+/* 
+#inputBox > * {
+    display: inline-block;
+} */
 #msg {
     flex:1;
     padding:8px 12px;
@@ -48,6 +55,11 @@
     /* transition: .4s; */
     outline: none;
     cursor: pointer;
+    /* margin-top: 38px; */
+    padding: 10px;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
 }
 
 #btnSend:hover {

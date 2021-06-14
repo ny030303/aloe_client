@@ -1,0 +1,15 @@
+.tiny-form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+    padding: 5px;
+    /* background-color: rgba(255,255,255, 255); */
+}
+
+.tiny-form .tox .tox-statusbar {
+    display: none;
+}
+
+.tiny-form .tox .tox-notification--warning {
+    display: none !important;
+}

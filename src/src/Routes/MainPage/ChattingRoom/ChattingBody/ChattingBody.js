@@ -3,6 +3,7 @@ import "./ChattingBody.css";
 import "./chatbox.css";
 import Swal from 'sweetalert2';
 import { serverLink, socket, clientLink } from '../../../../services/SocketService';
+import TinyForm from '../../../../Component/TinyForm/TinyForm';
 
 export default class ChattingBody extends React.Component {
 
@@ -30,10 +31,12 @@ export default class ChattingBody extends React.Component {
 
     messageEvent = (e) => { this.setState({ message: e.target.value.trim() }); }
 
-    sendMessage = () => {
+    sendMessage = (message) => {
         console.log("send?");
-        this.msgInputRef.current.value = "";
-        socket.emit("write-message", {_id: this.props.group_info._id, message: this.state.message});
+        // this.msgInputRef.current.value = "";
+        // socket.emit("write-message", {_id: this.props.group_info._id, message: this.state.message});
+        console.log(escape(message));
+        socket.emit("write-message", {_id: this.props.group_info._id, message: escape(message)});
     }
 
     copyEvent= () => {
@@ -73,9 +76,9 @@ export default class ChattingBody extends React.Component {
         }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                Swal.fire('Saved!', '', 'success')
+                Swal.fire('Saved!', '', 'success');
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire('Changes are not saved', '', 'info');
             }
         });
                   
@@ -83,6 +86,7 @@ export default class ChattingBody extends React.Component {
 
     render() {
         let {userData, group_info} = this.props;
+        
         return (
             <div className="chatting-body">
                 <div id="chat">
@@ -99,14 +103,15 @@ export default class ChattingBody extends React.Component {
                                         <h3  className="date">{el.created}</h3>
                                     </div>
                                 
-                                    <div className="message">{el.message}</div>
+                                    <div className="message" dangerouslySetInnerHTML={ {__html: unescape(el.message)} }></div>
                                 </div>
                             ))
                         }
                     </div> 
                     <div id="inputBox">
-                        <input type="text" id="msg" autoComplete="off" onChange={this.messageEvent} onInput={this.messageEvent} ref={this.msgInputRef}/>
-                        <button id="btnSend" onClick={this.sendMessage}>ENTER</button>
+                        <TinyForm sendMessage={this.sendMessage}/>
+                        {/* <input type="text" id="msg" autoComplete="off" onChange={this.messageEvent} onInput={this.messageEvent} ref={this.msgInputRef}/> */}
+                        {/* <button id="btnSend" onClick={this.sendMessage}>ENTER</button> */}
                     </div>
                 </div>
                 <div className="group-info">
