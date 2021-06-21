@@ -25,7 +25,7 @@ import { Editor } from '@tinymce/tinymce-react';
          init={{
             selector: 'textarea',  // change this value according to your HTML
             resize: false,          
-            height: 130,
+            // height: 120,
             menubar: false,
             codesample_global_prismjs: true,
             plugins: [

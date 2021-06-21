@@ -11,10 +11,13 @@ export default class ChattingBody extends React.Component {
         super(props);
         console.log(props);
         this.state = {
-            message: ""
+            message: "",
+            formHeight: 130,
+            isLineOn: false
         }
         this.msgBoxRef = React.createRef();
         this.msgInputRef = React.createRef();
+        this.inputFormRef = React.createRef();
 
         this.linkRef = React.createRef();
     }
@@ -83,12 +86,23 @@ export default class ChattingBody extends React.Component {
         });
                   
     }
-
+    mouseDownEvent = () => { this.setState({"isLineOn": true});}
+    mouseUpEvent = () => { this.setState({"isLineOn": false});}
+    mouseMoveEvent = (e) => {
+        // if(this.state.isLineOn) {
+        //     let y = e.clientY + this.inputFormRef.current.offsetHeight;
+        //     let yState = y - e.clientY;
+            
+        //     console.log(e.clientY, ", " ,y);
+        //     this.setState({"formHeight": yState + 'px'});
+        //     console.log(yState + "px");
+        // }
+    }
     render() {
         let {userData, group_info} = this.props;
         
         return (
-            <div className="chatting-body">
+            <div className="chatting-body" onMouseMove={(e) => this.mouseMoveEvent(e)} >
                 <div id="chat">
                     <div className="chat-header">
                         {group_info.title}
@@ -108,7 +122,8 @@ export default class ChattingBody extends React.Component {
                             ))
                         }
                     </div> 
-                    <div id="inputBox">
+                    <div id="inputBox" style={{height: this.state.formHeight}} ref={this.inputFormRef}>
+                        <div className="resizeLine" onMouseDown={this.mouseDownEvent} onMouseUp={this.mouseUpEvent}/>
                         <TinyForm sendMessage={this.sendMessage}/>
                         {/* <input type="text" id="msg" autoComplete="off" onChange={this.messageEvent} onInput={this.messageEvent} ref={this.msgInputRef}/> */}
                         {/* <button id="btnSend" onClick={this.sendMessage}>ENTER</button> */}
