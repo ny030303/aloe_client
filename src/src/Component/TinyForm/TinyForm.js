@@ -9,7 +9,8 @@ import { Editor } from '@tinymce/tinymce-react';
    const log = () => {
      if (editorRef.current) {
     //    console.log(editorRef.current.getContent());
-        let res = editorRef.current.getContent();
+        // let res = editorRef.current.getContent();
+        let res = editorRef.current.getContent({ format: "css"});
         editorRef.current.value = "";
         return res;
        
