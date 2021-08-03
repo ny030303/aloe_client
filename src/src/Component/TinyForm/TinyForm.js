@@ -8,10 +8,11 @@ import { Editor } from '@tinymce/tinymce-react';
    const editorRef = useRef(null);
    const log = () => {
      if (editorRef.current) {
-    //    console.log(editorRef.current.getContent());
+        // console.log(editorRef.current.getContent());
         // let res = editorRef.current.getContent();
-        let res = editorRef.current.getContent({ format: "css"});
-        editorRef.current.value = "";
+        console.log(editorRef.current);
+        let res = editorRef.current.getContent({format : 'raw'});
+        editorRef.current.setContent("");
         return res;
        
      } else {
@@ -31,7 +32,7 @@ import { Editor } from '@tinymce/tinymce-react';
             codesample_global_prismjs: true,
             plugins: [
                 "advlist autolink link image lists charmap print " +
-				"preview codesample code emoticons textcolor"
+				        "preview codesample code emoticons textcolor"
             ],
             toolbar: 'undo redo | styleselect | bold italic | link imageupload | codesample code | forecolor backcolor emoticons | help',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'

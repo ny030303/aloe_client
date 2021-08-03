@@ -37,54 +37,36 @@ export default class SignupPage extends React.Component {
 
   signup = async () => {
     const { state } = this;
-    let imgData = await fileToDataURL(this.myImg.current.files[0]);
+    let imgData = this.state.profileimg;
+    // let imgData = await fileToDataURL(this.myImg.current.files[0]);
     // console.log({ "img": imgData});
-    switch(clientMode) {
-      case "web":
-        await serviceDB.fileUpload("signupPage", {"img": imgData,
-          callback: (fRes) => {
-            this.setState({profileURL: fRes.fileName});
-            let userData = {
-              id: state.id,
-              pwd: state.pwd,
-              name: state.name,
-              profileURL: this.state.profileURL,
-              memo: ''
-            };
-            serviceDB.signup("signupPage", {userData, 
-              callback: (sRes) => {
-                if (Number(sRes.result) == 1) {
-                  Swal.fire("메시지", "정상적으로 회원가입 됐습니다.", "success");
-                  this.gotoBack();
-                }
-              }
-            });
-          }
-        });
+    let dbController;
+    switch (clientMode) {
+      case "web": dbController = serviceDB;
         break;
-      case "electron":
-        await window.db.fileUpload("signupPage", {"img": imgData,
-          callback: (fRes) => {
-            this.setState({profileURL: fRes.fileName});
-            let userData = {
-              id: state.id,
-              pwd: state.pwd,
-              name: state.name,
-              profileURL: this.state.profileURL,
-              memo: ''
-            };
-            window.db.signup("signupPage", {userData, 
-              callback: (sRes) => {
-                if (Number(sRes.result) == 1) {
-                  Swal.fire("메시지", "정상적으로 회원가입 됐습니다.", "success");
-                  this.gotoBack();
-                }
-              }
-            });
-          }
-        });
+      case "electron": dbController = window.db;
         break;
     }
+    dbController.fileUpload("signupPage", {"img": imgData,
+      callback: (fRes) => {
+      this.setState({profileURL: fRes.fileName});
+      let userData = {
+        id: state.id,
+        pwd: state.pwd,
+        name: state.name,
+        profileURL: this.state.profileURL,
+        memo: ''
+      };
+      serviceDB.signup("signupPage", {userData, 
+        callback: (sRes) => {
+          if (Number(sRes.result) == 1) {
+            Swal.fire("메시지", "정상적으로 회원가입 됐습니다.", "success");
+            this.gotoBack();
+          }
+        }
+      });
+    }
+  });
     
   }
 
@@ -106,10 +88,10 @@ export default class SignupPage extends React.Component {
         let rtSrc = { x: 0, y: 0, w: img.width, h: img.height };
         if (img.width > img.height) {
           rtSrc.w = img.height;
-          rtSrc.x = 0;
+          rtSrc.x = (img.height/2) - (128/2);
         } else {
           rtSrc.h = img.width;
-          rtSrc.y = 0;
+          rtSrc.y =  (img.width/2) - (128/2);
         }
         // console.log(rtSrc);
         ctx.drawImage(img, rtSrc.x, rtSrc.y, rtSrc.w, rtSrc.h, 0, 0, 128, 128);
