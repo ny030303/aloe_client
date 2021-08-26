@@ -1,5 +1,6 @@
 import * as React from 'react';
 import "./ChattingStart.css";
+import svg from '../../../../assets/undraw_circles_y7s2.svg';
 import AddGroupPopup from '../../../../Component/AddGroupPopup/AddGroupPopup';
 
 export default class ChattingStart extends React.Component {
@@ -42,6 +43,9 @@ export default class ChattingStart extends React.Component {
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                             </div>
                         </div>
+                    </div>
+                    <div className="chatting-start-svg">
+                    <img src={svg} alt="chatting-start-svg" />
                     </div>
                     {/* <div className="chatting-start-boxbtn-wrap">
                         <div>

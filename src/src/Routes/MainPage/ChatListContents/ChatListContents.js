@@ -3,13 +3,15 @@ import ProfileBox from '../../../Component/ProfileBox/ProfileBox';
 import "./ChatListContents.css";
 import { socket } from '../../../services/SocketService';
 import ChatlistGroupbox from './ChatlistGroupbox/ChatlistGroupbox';
+import AddGroupPopup from '../../../Component/AddGroupPopup/AddGroupPopup';
 
 export default class ChatListContents extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            groupList: []
+            groupList: [],
+            isShowPopup: false
         };
 
     }
@@ -21,6 +23,7 @@ export default class ChatListContents extends React.Component {
             this.setState({groupList: data});
         })
     }
+    controllPopup = () => this.setState({isShowPopup: !this.state.isShowPopup});
 
     render() {
         return (
@@ -30,6 +33,13 @@ export default class ChatListContents extends React.Component {
                     this.state.groupList.map((g,i) => (<ChatlistGroupbox group={g} key={i}/>))
                 }
                 
+                <div className="chatlist-addgroup-btn" onClick={this.controllPopup}>
+                    <i class="fas fa-plus"></i>
+                </div>
+
+                {
+                    this.state.isShowPopup ?  <AddGroupPopup hidePopup={this.controllPopup}/> : <></>
+                }
             </div>
         )
     }

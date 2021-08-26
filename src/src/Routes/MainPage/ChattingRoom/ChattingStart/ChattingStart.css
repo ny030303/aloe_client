@@ -33,3 +33,8 @@
 .chatting-start-boxbtn-wrap .uk-card-title {
     margin: 0;
 }
+
+.chatting-start-svg {
+    width: 40rem;
+    margin: 0 auto;
+}
