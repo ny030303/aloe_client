@@ -38,3 +38,12 @@
     width: 40rem;
     margin: 0 auto;
 }
+
+
+
+@media  (max-width: 1500px) {
+    .chatting-start-svg {
+        width: 35rem;
+        margin: 10px auto 0 auto;
+    }
+}

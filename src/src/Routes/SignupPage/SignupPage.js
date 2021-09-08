@@ -86,12 +86,14 @@ export default class SignupPage extends React.Component {
       let img = new Image();
       img.onload = () => {
         let rtSrc = { x: 0, y: 0, w: img.width, h: img.height };
+        // console.log(img.width, img.height);
         if (img.width > img.height) {
           rtSrc.w = img.height;
           rtSrc.x = (img.height/2) - (128/2);
         } else {
           rtSrc.h = img.width;
-          rtSrc.y =  (img.width/2) - (128/2);
+          rtSrc.y = (128/2);
+          // console.log(rtSrc);
         }
         // console.log(rtSrc);
         ctx.drawImage(img, rtSrc.x, rtSrc.y, rtSrc.w, rtSrc.h, 0, 0, 128, 128);
